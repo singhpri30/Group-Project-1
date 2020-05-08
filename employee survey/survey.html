@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <link rel="stylesheet" href="style copy.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="hero is-dark is-fullheight">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a
+                class="navbar-item has-text-white is-size-4"
+                href="landingPage.html"
+              >
+                <h1>COVID-19 SCREENING TRACKER</h1>
+                <!--<img
+                  src="http://bulma.io/images/bulma-type-white.png"
+                  alt="Logo"
+                />-->
+              </a>
+              <span class="navbar-burger burger" data-target="navbarMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <a
+                    class="button is-white is-outlined"
+                    href="landingPage.html"
+                  >
+                    <span class="icon">
+                      <i class="fa fa-home"></i>
+                    </span>
+                    <span>Home</span>
+                  </a>
+                </span>
+                <span class="navbar-item">
+                  <a class="button is-white is-outlined" href="resources.html">
+                    <span class="icon">
+                      <i class="fa fa-superpowers"></i>
+                    </span>
+                    <span>Resources</span>
+                  </a>
+                </span>
+                <span class="navbar-item">
+                  <a class="button is-white is-outlined" href="covidNews.html">
+                    <span class="icon">
+                      <i class="fa fa-book"></i>
+                    </span>
+                    <span>COVID News</span>
+                  </a>
+                </span>
+                <span class="navbar-item">
+                  <a class="button is-white is-outlined" href="covidStats.html">
+                    <span class="icon">
+                      <i class="fa fa-book"></i>
+                    </span>
+                    <span>COVID Stats</span>
+                  </a>
+                </span>
+                <span class="navbar-item">
+                  <a class="button is-white is-outlined" href="login.html">
+                    <span class="icon">
+                      <i class="fa fa-key"></i>
+                    </span>
+                    <span>Employee Data</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+
+
+
+    
+    <div class="container columns-is-full-mobile columns-is-two-thirds-tablet" id="questionField">
+    <!--  <code>is-two-thirds-tablet</code><br> -->
+    <!-- <code>is-half-desktop</code><br> -->
+      <h1 id="qHeader">Daily Questions</h1>
+      <p id="date">Date: <span id="dateStamp"></span></p>
+      <div class="row">
+        <div class="row" id="employeeAdmin">
+          <h1 qSpace>Questionaire Administrator</h1>
+          <div class="select">
+            <select id="adminName">
+              <option>Admin Name</option>
+            </select>
+          </div>
+          <button class="button" id="addAdmin">Add Administrator</button>
+        </div>
+        <h1>Employee Name</h1>
+        <div class="row" id="newEmployee">
+          <div class="select">
+            <select id="employeeName">
+              <option>Employee Name</option>
+            </select>
+          </div>
+          <button class="button" id="addEmployee">Add New Employee</button>
+        </div>
+      </div>
+      <button class="button" id="startBtn">Begin</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.0.min.js"
+      integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
