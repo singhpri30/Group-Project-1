@@ -1,5 +1,5 @@
-var date = moment().format("MM" + "-" + "DD" + "-" + "YY");
-$("#dateStamp").text(date);
+var todayDate = moment().format("MM" + "-" + "DD" + "-" + "YY");
+$("#dateStamp").text(todayDate);
 
 var surveyQuestions = [
   "Have you been in close contact with a confirmed case of Covid-19?",
@@ -17,6 +17,8 @@ var adminEntryList = JSON.parse(adminEntryListJSON);
 var employeeEntryListJSON = localStorage.getItem("employee-json");
 var employeeEntryList = JSON.parse(employeeEntryListJSON);
 
+var answerObject = {};
+
 if (adminEntryList == null) {
 } else {
   for (i = 0; i < adminEntryList.length; i++) {
@@ -32,72 +34,6 @@ if (employeeEntryList == null) {
   }
 }
 
-function askQuestion() {
-  $("#questionField").text("");
-  var question = $("<p>").attr("id", questionNum);
-  $(question).text(surveyQuestions[questionNum]);
-  var btnDiv = $("<div>");
-  var nextBtn = $("<button>")
-    .attr({ class: "button", id: "nextBtn" })
-    .text("Next");
-  $(btnDiv).append(nextBtn);
-  $("#questionField").append(question.text());
-  var radioAnswerdiv = $("<div>").attr({
-    class: "control",
-    id: "q" + questionNum,
-  });
-  var yesLabel = $("<label>").attr("class", "radio");
-  var inputYes = $("<input>").attr({
-    type: "radio",
-    name: "q" + questionNum,
-    value: "yes",
-  });
-  $(yesLabel).text("yes ");
-  var noLabel = $("<label>").attr("class", "radio");
-  var inputNo = $("<input>").attr({
-    type: "radio",
-    name: "q" + questionNum,
-    value: "no",
-  });
-  $(noLabel).text("no ");
-  $(yesLabel).append(inputYes);
-  $(radioAnswerdiv).append(yesLabel);
-  $(noLabel).append(inputNo);
-  $(radioAnswerdiv).append(noLabel);
-  $("#questionField").append(radioAnswerdiv);
-
-  $("#questionField").append(btnDiv);
-
-  function takeTemp() {
-    $("#questionField").text("");
-    var header = $("<h1>").text("Employee Temperature");
-    var employeeTemp = $("<input>").attr({
-      class: "input",
-      id: "employeeTemp",
-    });
-    var submitBtn = $("<button>").attr({
-      class: "button",
-      id: "submitBtn",
-    });
-    $(submitBtn).text("Submit");
-    $("#questionField").append(header, employeeTemp, submitBtn);
-  }
-
-  $("#nextBtn").click(function () {
-    questionNum++;
-    if (questionNum === 2) {
-      askQuestion();
-      var testPara = $("<p>");
-      $(testPara).text("test");
-      $("#questionField").append(testPara);
-    } else if (questionNum < surveyQuestions.length && questionNum != 2) {
-      askQuestion();
-    } else {
-      takeTemp();
-    }
-  });
-}
-
 // .one() function:
 //https://stackoverflow.com/questions/2323948/disabling-the-button-after-once-click
 $("#addAdmin").one("click", function () {
@@ -111,6 +47,7 @@ $("#addAdmin").one("click", function () {
 
   $("#addNewAdmin").click(function () {
     var newAdminToAdd = $("#newAdminName").val();
+    $(newAdminToAdd).attr("id", newAdminToAdd);
     $(addNameToSelector).text(newAdminToAdd);
     $("#adminName").append(addNameToSelector);
     $(nameInput).hide();
@@ -157,5 +94,84 @@ $("#startBtn").click(function () {
   localStorage.setItem("admin-json", adminArrayLSJSON);
   localStorage.setItem("employee-json", employeeArrayLSJSON);
 
+  var answersObject = {
+    date: todayDate,
+    adminName: $("#adminName option:selected").val(),
+    employeeName: $("#employeeName option:selected").val(),
+  };
+  sessionStorage.clear();
+
+  answersObjectJSON = JSON.stringify(answersObject);
+  sessionStorage.setItem("answers", answersObjectJSON);
+
   askQuestion();
 });
+
+//function
+function askQuestion() {
+  $("#questionField").text("");
+  var question = $("<p>").attr("id", questionNum);
+  $(question).text(surveyQuestions[questionNum]);
+  var btnDiv = $("<div>");
+  var nextBtn = $("<button>")
+    .attr({ class: "button", id: "nextBtn" })
+    .text("Next");
+  $(btnDiv).append(nextBtn);
+  $("#questionField").append(question.text());
+  var radioAnswerdiv = $("<div>").attr({
+    class: "control",
+    id: "q" + questionNum,
+  });
+  var yesLabel = $("<label>").attr("class", "radio");
+  var inputYes = $("<input>").attr({
+    type: "radio",
+    name: "q" + questionNum,
+    value: "yes",
+  });
+  $(yesLabel).text("yes ");
+  var noLabel = $("<label>").attr("class", "radio");
+  var inputNo = $("<input>").attr({
+    type: "radio",
+    name: "q" + questionNum,
+    value: "no",
+  });
+  $(noLabel).text("no ");
+  $(yesLabel).append(inputYes);
+  $(radioAnswerdiv).append(yesLabel);
+  $(noLabel).append(inputNo);
+  $(radioAnswerdiv).append(noLabel);
+
+  $("#questionField").append(radioAnswerdiv);
+
+  $("#questionField").append(btnDiv);
+
+  function takeTemp() {
+    $("#questionField").text("");
+    var header = $("<h1>").text("Employee Temperature");
+    var employeeTemp = $("<input>").attr({
+      class: "input",
+      type: "number",
+      id: "employeeTemp",
+    });
+    var submitBtn = $("<button>").attr({
+      class: "button",
+      id: "submitBtn",
+    });
+    $(submitBtn).text("Submit");
+    $("#questionField").append(header, employeeTemp, submitBtn);
+  }
+
+  $("#nextBtn").click(function () {
+    questionNum++;
+    if (questionNum === 2) {
+      askQuestion();
+      var testPara = $("<p>");
+      $(testPara).text("test");
+      $("#questionField").append(testPara);
+    } else if (questionNum < surveyQuestions.length && questionNum != 2) {
+      askQuestion();
+    } else {
+      takeTemp();
+    }
+  });
+}
