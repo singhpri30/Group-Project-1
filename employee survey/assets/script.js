@@ -161,6 +161,7 @@ function askQuestion() {
     type: "radio",
     name: "q" + questionNum,
     value: "yes",
+    id: "yesBtn",
   });
 
   var noLabel = $("<label>").attr("class", "radio");
@@ -240,9 +241,48 @@ function askQuestion() {
       //the third question (index 2) has a few potential follow-up questions
       if (questionNum === 2) {
         askQuestion();
-        var testPara = $("<p>");
-        $(testPara).text("test");
-        $("#questionField").append(testPara);
+        $("#yesBtn").click(function () {
+          var testPara = $("<p>").text(
+            "Please select any symptoms that apply:"
+          );
+          //div
+          var symptomsDiv = $("<div>");
+          //label
+          var labelEl = $("<label>").attr("class", "checkbox");
+          //input
+          var inputRunnyNose = $("<input>").attr({
+            type: "checkbox",
+            name: "answer",
+          });
+          $(inputRunnyNose).text("Runny Nose");
+          //input
+          var inputSoreThoat = $("<input>").attr({
+            type: "checkbox",
+            name: "answer",
+          });
+          $(inputSoreThoat).text("SoreThroat");
+          //input
+          var inputCough = $("<input>").attr({
+            type: "checkbox",
+            name: "answer",
+          });
+          $(inputCough).text("Cough");
+          //input
+          var inputShortnessOfBreath = $("<input>").attr({
+            type: "checkbox",
+            name: "answer",
+          });
+          $(inputShortnessOfBreath).text("Shortness Of Breath");
+
+          $(labelEl).append(
+            inputRunnyNose,
+            inputSoreThoat,
+            inputCough,
+            inputShortnessOfBreath
+          );
+          $(symptomsDiv).append(labelEl);
+          $("#questionField").append(testPara, symptomsDiv);
+        });
 
         //otherwise, just needs to ask questions
       } else if (questionNum < surveyQuestions.length && questionNum != 2) {
