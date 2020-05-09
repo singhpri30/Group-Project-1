@@ -21,9 +21,8 @@
 #questionField {
   border: solid 2px black;
   height: 500px;
-
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 200px;
   padding-left: 10px;
   padding-top: 10px;
   padding-right: 10px;
@@ -38,6 +37,7 @@
 #qHeader {
   text-align: center;
   font-size: xx-large;
+  text-decoration: underline;
   font-weight: 1000;
   padding-bottom: 10px;
 }
