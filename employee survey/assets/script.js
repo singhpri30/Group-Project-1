@@ -120,9 +120,9 @@ $("#startBtn").click(function () {
   //creating an object to commit to session storage
   //object contains answers provided on this table
   var answersObject = {
-    date: todayDate,
-    adminName: $("#adminName option:selected").val(),
-    employeeName: $("#employeeName option:selected").val(),
+    Date: todayDate,
+    "Admin Name": $("#adminName option:selected").val(),
+    "Employee Name": $("#employeeName option:selected").val(),
   };
   //clearing out anything already in session storage
   sessionStorage.clear();
@@ -189,12 +189,12 @@ function askQuestion() {
       type: "number",
       id: "employeeTemp",
     });
-    var submitBtn = $("<button>").attr({
+    var reviewBtn = $("<button>").attr({
       class: "button",
-      id: "submitBtn",
+      id: "reviewBtn",
     });
-    $(submitBtn).text("Submit");
-    $("#questionField").append(header, employeeTemp, submitBtn);
+    $(reviewBtn).text("Review");
+    $("#questionField").append(header, employeeTemp, reviewBtn);
   }
 
   //adding answers to session storage
@@ -202,7 +202,21 @@ function askQuestion() {
     var lsAnswers = sessionStorage.getItem("answers");
     var lsAnswersJSON = JSON.parse(lsAnswers);
     var answer = $("#askQuestion input:checked").val();
-    var varName = "question " + (parseInt(questionNum) + parseInt(1));
+    var varName = "Question " + (parseInt(questionNum) + parseInt(1));
+    var answerToAdd = {
+      [varName]: answer,
+    };
+    var superObject = Object.assign(lsAnswersJSON, answerToAdd);
+    console.log(superObject);
+    var STRINGlsAnswersJSON = JSON.stringify(superObject);
+    sessionStorage.setItem("answers", STRINGlsAnswersJSON);
+  }
+
+  function addTemp() {
+    var lsAnswers = sessionStorage.getItem("answers");
+    var lsAnswersJSON = JSON.parse(lsAnswers);
+    var answer = $("#employeeTemp").val();
+    var varName = "Employee Temperature";
     var answerToAdd = {
       [varName]: answer,
     };
@@ -237,14 +251,18 @@ function askQuestion() {
         //one all questions have been asked, just needs to
       } else {
         takeTemp();
-        $("#submitBtn").click(function () {
+        $("#reviewBtn").click(function () {
+          addTemp();
           $("#questionField").text("");
-          var header = $("<h1>").text("Review Answers");
-          var answerDisplayDiv = $("<div>");
+          var header = $("<h1>")
+            .text("Review Answers")
+            .css("text-align", "center");
+          var answerDisplayDiv = $("<div>").css("text-align", "center");
 
           var answersFromSessStor = sessionStorage.getItem("answers");
           var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
 
+          //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
           for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
             var answerPara = $("<p>").text(`${key}: ${value}`);
             $(answerDisplayDiv).append(answerPara);
