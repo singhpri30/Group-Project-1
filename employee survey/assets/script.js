@@ -154,7 +154,7 @@ function askQuestion() {
   //adding yes or no control buttons
   var radioAnswerdiv = $("<div>").attr({
     class: "control",
-    id: "q" + questionNum,
+    id: "askQuestion",
   });
   var yesLabel = $("<label>").attr("class", "radio");
   var inputYes = $("<input>").attr({
@@ -199,9 +199,12 @@ function askQuestion() {
 
   //functionality for the next question button
   $("#nextBtn").click(function () {
-    if ($("#q" + questionNum).input.val() === "") {
-      alert("Please select an answer");
+    if ($("#askQuestion input:checked").val() == null) {
       event.preventDefault();
+      var pleaseAnswer = $("<p>")
+        .text("Please Pick Yes or No")
+        .css("color", "red");
+      $("#questionField").append(pleaseAnswer);
     } else {
       questionNum++;
       //the third question (index 2) has a few potential follow-up questions
