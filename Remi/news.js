@@ -7,7 +7,54 @@ $.ajax({
 console.log(response);
 // console.log(response.articles[0].author);
 
+
+
+
 //Add images to the cards
+
+
+
+
+
+
+
+//prepend and add new h4 element for date of publication in description area
+var datePub = response.articles[0].publishedAt;
+$("#description-1").prepend(datePub);
+// console.log(response.articles[0].publishedAt);
+
+var datePub = response.articles[1].publishedAt;
+$("#description-2").prepend(datePub);
+
+var datePub = response.articles[2].publishedAt;
+$("#description-3").prepend(datePub);
+
+var datePub = response.articles[3].publishedAt;
+$("#description-4").prepend(datePub);
+
+var datePub = response.articles[4].publishedAt;
+$("#description-5").prepend(datePub);
+
+var datePub = response.articles[6].publishedAt;
+$("#description-6").prepend(datePub);
+
+var datePub = response.articles[7].publishedAt;
+$("#description-7").prepend(datePub);
+
+var datePub = response.articles[8].publishedAt;
+$("#description-8").prepend(datePub);
+
+var datePub = response.articles[9].publishedAt;
+$("#description-9").prepend(datePub);
+
+var datePub = response.articles[10].publishedAt;
+$("#description-10").prepend(datePub);
+
+var datePub = response.articles[13].publishedAt;
+$("#description-11").prepend(datePub);
+
+var datePub = response.articles[14].publishedAt;
+$("#description-12").prepend(datePub);
 
 
 
@@ -49,9 +96,24 @@ var cardContent = response.articles[14].content;
 $("#description-12").append(cardContent);
 
 
+
+
+
+
+
 //add events listeners to article object
-var buttonEl = response.articles[0].url;
-console.log(response.articles[0].url);
+ var buttonEl = response.articles[0].url;
+$("#btn-1").click(function () {
+ //the function should be go to this url 
+
+});
+
+ // $("#btn-1").click(function(){
+//   $("#btn-").click(buttonEl);
+  // console.log(response.articles[0].url);
+
+
+// });
 
 
 
