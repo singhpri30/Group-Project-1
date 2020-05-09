@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Covid-19 Statistics</title>
+    <!--Font Awesome CDN Link-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!--Google Fonts CDN Link -->
+    <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet" />
+    <!-- Bulma CSS Framework CDN Link-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+    <!--CSS file Link-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+</head>
+
+<body>
+    <section class="hero is-dark is-fullheight">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item has-text-white is-size-4" href="landingPage.html">
+                            <h1>COVID-19 SCREENING TRACKER</h1>
+                        </a>
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="landingPage.html">
+                                    <span class="icon">
+                                        <i class="fa fa-home"></i>
+                                    </span>
+                                    <span>Home</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="resources.html">
+                                    <span class="icon">
+                                        <i class="fa fa-superpowers"></i>
+                                    </span>
+                                    <span>Resources</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="covidNews.html">
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                    <span>COVID News</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="covidStats.html">
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                    <span>COVID Stats</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="login.html">
+                                    <span class="icon">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                    <span>Employee Data</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="wrapper">
+                    <div class="columns">
+                        <aside class="column is-3 aside">
+                            <!-- <nav class="menu level">
+
+
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <p class="subtitle is-5">
+                                            <strong>123</strong> posts
+                                        </p>
+                                    </div>
+                                </div>
+
+                               
+                                <div class="level-right">
+                                    <p class="level-item"><strong>All</strong></p>
+                                </div> 
+
+
+                            </nav> -->
+                            <div id="score-table">
+                                <table>
+                                    <thead>
+                                        <th>State</th>
+                                        <th>Cases</th>
+                                    </thead>
+                                    <tbody id="table-data">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic minus delectus animi,
+                                necessitatibus, aut nisi atque ratione, consectetur ducimus reprehenderit qui
+                                exercitationem expedita laudantium optio? Nobis deserunt voluptates architecto adipisci.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quos saepe eos, voluptate,
+                                consectetur adipisci reprehenderit recusandae eius rem pariatur temporibus. Adipisci
+                                laudantium iusto non. Nisi porro deleniti modi tenetur
+
+                            </div>
+
+
+                        </aside>
+
+                        <main id="main" class="column main">
+
+                            <div class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <div class="title has-text-primary"><i class="fa fa-tachometer"></i> Covid-19
+                                            Statistics
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="dataSection" class="columns is-multiline">
+                                <div class="column">
+                                    <div class="box notification is-primary">
+                                        <div class="heading">Globally</div>
+
+                                        <div id="images">
+                                            <img id="img1"
+                                                src="https://images.unsplash.com/photo-1579781403337-de692320718a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
+                                                alt="Image">
+                                        </div>
+                                        <div class="title">Total Cases: <span id="global-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Deaths: <span id="death-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Recovered: <span id="recovered-stats">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="box notification is-warning">
+                                        <div class="heading">U.S.A</div>
+                                        <div id="images">
+                                            <img id="img1"
+                                                src="https://images.unsplash.com/photo-1581629485251-13922d434e39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
+                                                alt="Image">
+                                        </div>
+                                        <div class="title">Total Cases: <span id="usa-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Deaths: <span id="usa-death-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Recovered: <span id="usa-recovered-stats">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="box notification is-info">
+                                        <div class="heading">New Hampshire</div>
+                                        <div id="images">
+                                            <img id="img1"
+                                                src="https://images.unsplash.com/photo-1574447398998-d6ff6bb02480?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80"
+                                                alt="Image">
+                                        </div>
+                                        <div class="title">Total Cases: <span id="nh-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Deaths: <span id="nh-death-stats">
+                                            </span>
+                                        </div>
+                                        <div class="title">Recovered: <span id="nh-recovered-stats">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="dataSection" class="columns is-multiline">
+                                <div class="column is-6">
+                                    <article class="message is-dark">
+                                        <div class="message-header">
+                                            <p>Chart</p>
+                                        </div>
+                                        <div class="message-body">
+                                            <div id="chartLine" style="width: 100%;"></div>
+                                            <canvas id="chart"></canvas>
+                                        </div>
+                                    </article>
+                                </div>
+                                <div class="column is-6">
+                                    <article class="message is-dark">
+                                        <div class="message-header">
+                                            <p>Chart</p>
+                                        </div>
+                                        <div class="message-body">
+                                            <div id="chartScatter" style="width: 100%;"></div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="assets/javascript/covidstats.js"></script>
+
+</body>
+
+</html>

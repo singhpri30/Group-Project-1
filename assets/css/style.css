@@ -17,3 +17,45 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+
+/* Priyanka's CSS */
+/************************************************************************/
+ #main{
+   border: 1px solid white;
+ }
+ .aside{
+  border: 1px solid white;
+  height: 100%;
+}
+.heading{
+  font-size: 25px;
+  background-color: rgb(94, 92, 90);
+  margin-bottom: 10px;
+  color: bisque;
+}
+.title{
+  font-size: 20px;
+  margin-bottom: 0;
+  padding: 0;
+  color: bisque;
+}
+#images{
+  width: 100%;
+  height: auto;
+}
+#score-table{
+  max-height:500px; /*example*/
+   overflow: auto; /* auto , scroll .. */
+}
+#dataSection{
+  background-color: rgb(3, 60, 95);
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  margin-top: 5px;
+}
+
+
+
+
+/* ************************************************************************** */
