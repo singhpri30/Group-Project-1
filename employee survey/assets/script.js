@@ -197,6 +197,21 @@ function askQuestion() {
     $("#questionField").append(header, employeeTemp, submitBtn);
   }
 
+  //adding answers to session storage
+  function addAnswer() {
+    var lsAnswers = sessionStorage.getItem("answers");
+    var lsAnswersJSON = JSON.parse(lsAnswers);
+    var answer = $("#askQuestion input:checked").val();
+    var varName = "question " + (parseInt(questionNum) + parseInt(1));
+    var answerToAdd = {
+      [varName]: answer,
+    };
+    var superObject = Object.assign(lsAnswersJSON, answerToAdd);
+    console.log(superObject);
+    var STRINGlsAnswersJSON = JSON.stringify(superObject);
+    sessionStorage.setItem("answers", STRINGlsAnswersJSON);
+  }
+
   //functionality for the next question button
   $("#nextBtn").click(function () {
     if ($("#askQuestion input:checked").val() == null) {
@@ -206,6 +221,7 @@ function askQuestion() {
         .css("color", "red");
       $("#questionField").append(pleaseAnswer);
     } else {
+      addAnswer();
       questionNum++;
       //the third question (index 2) has a few potential follow-up questions
       if (questionNum === 2) {
@@ -221,6 +237,21 @@ function askQuestion() {
         //one all questions have been asked, just needs to
       } else {
         takeTemp();
+        $("#submitBtn").click(function () {
+          $("#questionField").text("");
+          var header = $("<h1>").text("Review Answers");
+          var answerDisplayDiv = $("<div>");
+
+          var answersFromSessStor = sessionStorage.getItem("answers");
+          var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
+
+          for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
+            var answerPara = $("<p>").text(`${key}: ${value}`);
+            $(answerDisplayDiv).append(answerPara);
+          }
+
+          $("#questionField").append(header, answerDisplayDiv);
+        });
       }
     }
   });
