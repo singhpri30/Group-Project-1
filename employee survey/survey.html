@@ -12,11 +12,10 @@
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
-    <link rel="stylesheet" href="style copy.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <section class="hero is-dark is-fullheight">
+    <section class="hero is-dark is-fullheight column is-mobile">
       <div class="hero-head">
         <nav class="navbar">
           <div class="container">
@@ -25,7 +24,7 @@
                 class="navbar-item has-text-white is-size-4"
                 href="landingPage.html"
               >
-                <h1>COVID-19 SCREENING TRACKER</h1>
+                <h1>COVID-19 TRACKER</h1>
                 <!--<img
                   src="http://bulma.io/images/bulma-type-white.png"
                   alt="Logo"
@@ -91,17 +90,14 @@
 
 
 
-    
-    <div class="container columns-is-full-mobile columns-is-two-thirds-tablet" id="questionField">
-    <!--  <code>is-two-thirds-tablet</code><br> -->
-    <!-- <code>is-half-desktop</code><br> -->
+    <div class="container column is-two-thirds-tablet is-half-desktop" id="questionField">
       <h1 id="qHeader">Daily Questions</h1>
       <p id="date">Date: <span id="dateStamp"></span></p>
       <div class="row">
         <div class="row" id="employeeAdmin">
           <h1 qSpace>Questionaire Administrator</h1>
           <div class="select">
-            <select id="adminName">
+           <select id="adminName">
               <option>Admin Name</option>
             </select>
           </div>
@@ -119,14 +115,17 @@
       </div>
       <button class="button" id="startBtn">Begin</button>
     </div>
+    
+  
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+ <script src="burgerBulma.js"></script>
 
     <script
       src="https://code.jquery.com/jquery-3.5.0.min.js"
       integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
       crossorigin="anonymous"
     ></script>
-    <script src="script.js"></script>
+    <script src="assets/script.js"></script>
   </body>
 </html>
