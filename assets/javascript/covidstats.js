@@ -1,7 +1,5 @@
-
-
 var usaStateTotal = "https://covidtracking.com/api/v1/states/current.json";
-
+var nhCountyTotal = "https://corona.lmao.ninja/v2/historical/usacounties/new%20hampshire?lastdays=1";
 
 
 // *****this code is for creating a table to populate usa state data
@@ -18,10 +16,10 @@ $.ajax({
         tabledateEl.text(response[i].state); // setting table cell text to state name 
 
         var tableConfirmed = $("<td>");//creating a table cell
-        tableConfirmed.text(response[i].total); // setting table cell text to state name 
+        tableConfirmed.text(response[i].total); // setting table cell text to total confirmed cases
 
         var tableDeath = $("<td>");//creating a table cell
-        tableDeath.text(response[i].death);// setting table cell text to state name 
+        tableDeath.text(response[i].death);// setting table cell text to total deaths
 
         tableRowElement.append(tabledateEl, tableConfirmed, tableDeath); //appending data to the table row
         $("#table-data").append(tableRowElement); //appending table data to the table
@@ -30,100 +28,43 @@ $.ajax({
 
 })
 
+// *****this code is for creating a table to populate nh county data
+$.ajax({
+    url: nhCountyTotal,
+    method: 'GET',
+}).then(function (response) {
+
+    for (var i = 0; i <= 9; i++) {
+
+        var countyName = response[i].county; //getting county names
+        var confirmedCounty = response[i].timeline.cases; //getting total cases
+        var deathCounty = response[i].timeline.deaths; //getting total deaths
+        for (x in confirmedCounty) {
+            var countyCases = confirmedCounty[x];
+        }
+        for (y in deathCounty) {
+            var countyDeaths = deathCounty[y];
+        }
+
+        var tableRowElement = $("<tr>"); //creating a table row
+
+        var tabledateEl = $("<td>"); //creating a table cell
+        tabledateEl.text(countyName.toUpperCase()); // setting table cell text to county name 
+
+        var tableConfirmed = $("<td>");//creating a table cell
+        tableConfirmed.text(countyCases); // setting table cell text to confirmed cases
+
+        var tableDeath = $("<td>");//creating a table cell
+        tableDeath.text(countyDeaths);// setting table cell text to total deaths
+
+        tableRowElement.append(tabledateEl, tableConfirmed, tableDeath); //appending data to the table row
+        $("#nhTable-data").append(tableRowElement); //appending table data to the table
+    };
+
+})
 
 
-
-
-
-
-
-//var countryTotal = "https://api.covid19api.com/total/country/united-states";
-//console.log(countryTotal);
-// var usaStatesArray = ["Belknap", "Carroll", "Strafford", "Rockingham", "Merrimack", "Cheshire", "Coos", "Grafton", "Hillsborough", "Sullivan"];
-
-// var usaConfirmedArray = [];
-// var usaDeathsArray = [];
-// var usaRecoveredArray = [];
-
-// var usaChartData = {
-//     labels: usaStatesArray, //dates x-axis
-//     datasets: [{
-//         type: 'bar', //chart type
-//         label: 'Confirmed',
-//         data: usaConfirmedArray,
-//         backgroundColor: [
-//             'rgba(54, 162, 235)',//blue first data set
-//             // 'rgba(54, 162, 235)',
-//             // 'rgba(54, 162, 235)',
-//             // 'rgba(54, 162, 235)',
-//             // 'rgba(54, 162, 235)',
-//             // 'rgba(54, 162, 235)'
-
-//         ],
-//         borderWidth: 2,
-//         options: {
-//             scales: {}
-//         }
-//     }]
-// };
-
-// usaChart();
-// function usaChart() {
-//     $.ajax({
-//         url: usaStateTotal,
-//         method: 'GET',
-//     }).then(function (response) {
-
-//         // var stateEl = $("#states");
-//         // console.log(stateEl);
-//         // console.log(response);
-//         for (i = 0; i < usaStatesArray.length; i++) { //looping over states array
-//             var usaStatesEl = response[i].state;
-//             // console.log(usaStatesEl);
-
-//             var usaConfirmnedEl = response[i].total;
-//             console.log(usaConfirmnedEl);
-
-//             var usaDeathsEl = response[i].death;
-//             console.log(usaDeathsEl);
-
-//             var usaRecoveredEl = response[i].recovered;
-//             console.log(usaRecoveredEl);
-
-//             usaStatesArray.push(usaStatesEl);
-
-//             usaConfirmedArray.push(usaConfirmnedEl);
-//             usaDeathsArray.push(usaDeathsEl);
-//             usaRecoveredArray.push(usaRecoveredEl);
-//             usaChartIt();
-//         }
-
-
-//     })
-// }
-
-
-
-
-// function usaChartIt() {
-
-//     var ctx1 = document.getElementById('usachart').getContext('2d');
-//     //clear chart
-//     if (window.newChart != null) {
-//         window.newChart.destroy();
-//     }
-
-//     window.newChart = new Chart(ctx1, {
-//         type: 'bar',
-//         data: usaChartData
-
-//     });
-
-// };
-
-
-
-//**********this code is to display Global and USA data */
+//**********this code is to display Global data */
 var queryURL = "https://api.covid19api.com/summary"; //api to fetch the data
 $.ajax({
     url: queryURL,
@@ -134,19 +75,35 @@ $.ajax({
     var totalConfirmed = response.Global.TotalConfirmed;
     var totalDeaths = response.Global.TotalDeaths;
     var totalRecovered = response.Global.TotalRecovered;
-    var usaTotalConfirmed = response.Countries[236].TotalConfirmed;
-    var usaTotalDeaths = response.Countries[236].TotalDeaths;
-    var usaTotalRecovered = response.Countries[236].TotalRecovered;
 
     //displaying the responses in different elements
     $("#global-stats").text(totalConfirmed);
     $("#death-stats").text(totalDeaths);
     $("#recovered-stats").text(totalRecovered);
+
+});
+
+//**********this code is to display USA data */
+var usaQueryURL = "https://covidtracking.com/api/v1/us/current.json"; //api to fetch the data
+$.ajax({
+    url: usaQueryURL,
+    method: 'GET',
+}).then(function (response) {
+
+    //fetching the responses and storing in the variables
+    var usaTotalConfirmed = response[0].total;
+    console.log(usaTotalConfirmed);
+    var usaTotalDeaths = response[0].death;
+    var usaTotalRecovered = response[0].recovered;
+
+    //displaying the responses in different elements
     $("#usa-stats").text(usaTotalConfirmed);
     $("#usa-death-stats").text(usaTotalDeaths);
     $("#usa-recovered-stats").text(usaTotalRecovered);
 
 });
+
+
 
 
 //**********this code is to display NH data */
@@ -169,11 +126,10 @@ $.ajax({
 });
 
 
-//**********this code is to create chart and display data on it */
+//**********this code is to create usa chart and display data on it */
 var countryTotal = "https://api.covid19api.com/total/country/united-states"; //api to fetch the data
-console.log(countryTotal);
-// var janData = "https://api.covid19api.com/country/united-states?from=2020-01-01T00:00:00Z&to=2020-01-31T00:00:00Z";
-// console.log(janData);
+
+
 var dateArray = [];
 var confirmedArray = [];
 var activeArray = [];
@@ -260,6 +216,88 @@ function chartIt() {
 };
 
 
+
+//**********this code is to create nh chart and display data on it */
+var countyURL = "https://corona.lmao.ninja/v2/historical/usacounties/new%20hampshire?lastdays=1";
+var countyName = ["Belknap", "Carroll", "Cheshire", "Coos", "Grafton", "Hillsborough", "Merrimack", "Rockingham", "Strafford", "Sullivan"]
+var dataCountyArray = [];
+var deathDataArray = [];
+
+
+$.ajax({
+    url: countyURL,
+    method: "GET",
+}).then(function (response) {
+
+    for (var i = 0; i < countyName.length; i++) {
+
+        var countyCases = response[i].timeline.cases;
+        var countyDeaths = response[i].timeline.deaths;
+        for (x in countyCases) {
+            var countyCasesTotal = countyCases[x];
+
+        }
+        for (y in countyDeaths) {
+            var countryDeathTotal = countyDeaths[y];
+
+        }
+        dataCountyArray.push(countyCasesTotal);
+        deathDataArray.push(countryDeathTotal);
+
+        nhChartIt(); //calling this function to create chart
+    }
+
+})
+
+// this code will create nh county chart
+function nhChartIt() {
+    var nhctx = document.getElementById('nhChart').getContext('2d'); // storing canvan element in a variable
+    if (window.nhChartEl != null) {
+        window.nhChartEl.destroy();
+    }
+
+    window.nhChartEl = new Chart(nhctx, {
+        type: 'line',
+        data: {
+            labels: countyName, //x-axis data
+            datasets: [{
+                label: 'Total Cases', //dataset one to display total cases
+                data: dataCountyArray,
+                borderColor: 'rgba(0,128,0)',
+                pointBorderWidth: 7,
+                borderWidth: 1,
+                pointRadius: 3,
+                borderWidth: 4,
+                fill: false,
+            }, {
+
+                label: 'Total Deaths', //dataset two to display total deaths
+                data: deathDataArray,
+                borderColor: 'rgba(255,0,0)',
+                pointBorderWidth: 7,
+                borderWidth: 2,
+                pointRadius: 3,
+                borderWidth: 4,
+                fill: false,
+            }]
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//this code to make navbar responsive
 (function () {
     var burger = document.querySelector('.burger');
     var menu = document.querySelector('#' + burger.dataset.target);
