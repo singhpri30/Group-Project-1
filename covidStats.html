@@ -107,7 +107,21 @@
                                 <div>
                                     <p id="state-stats">NH Counties Statistics</p>
                                 </div>
+                                <div id="nh-table">
+                                    <table>
+                                        <thead>
+                                            <tr class="nhHeader">
+                                                <th>County</th>
+                                                <th>Cases</th>
+                                                <th>Deaths</th>
+                                            </tr>
 
+                                        </thead>
+                                        <tbody id="nhTable-data">
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
 
@@ -210,18 +224,17 @@
                                         <div class="message-header">
                                             <p>U.S.A Chart</p>
                                         </div>
-                                        <div class="message-body">
-                                            <div id="chartLine" style="width: 100%;"></div>
+                                        <div id="usaChart-body" class="message-body">
+
                                             <canvas id="chart"></canvas>
                                         </div>
                                     </article>
                                     <article class="message is-dark">
                                         <div class="message-header">
-                                            <p>USA Chart</p>
+                                            <p>NH Chart</p>
                                         </div>
-                                        <div class="message-body">
-                                            <div id="chartLine" style="width: 100%;"></div>
-                                            <canvas id="usachart"></canvas>
+                                        <div id="nhChart-body" class="message-body">
+                                            <canvas id="nhChart"></canvas>
                                         </div>
                                     </article>
                                 </div>
