@@ -31,7 +31,7 @@ height: auto;
   border: 1px solid rgb(4, 16, 36);
   width: 100%;
   height: auto;
-  padding: 10px;
+  padding: 8px;
   margin: 0;
  
 }
@@ -52,12 +52,14 @@ height: auto;
   height: auto;
 }
 #state-stats{
-  font-size: 20px;
-  margin: 8px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  
 }
 #usa-table{
   max-height:900px; /*example*/
    overflow: auto; /* auto , scroll .. */
+   margin-bottom: 10px;
    
 }
 #nh-table{
