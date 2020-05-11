@@ -227,6 +227,108 @@ function askQuestion() {
     sessionStorage.setItem("answers", STRINGlsAnswersJSON);
   }
 
+  function askSymptoms() {
+    event.preventDefault();
+    $("#yesBtn").click(function () {
+      var testPara = $("<p>").text("Please select any symptoms that apply:");
+      //div
+      var symptomsDiv = $("<div>");
+      //label
+      var labelElOne = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Runny Nose")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElTwo = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Sore Throat")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElThree = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Cough")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElFour = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Shortness of Breath")
+        .css({ padding: "2px", margin: "2px" });
+      //input
+      var inputRunnyNose = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox1",
+        value: "unchecked",
+        title: "Runny Nose",
+      });
+      //input
+      var inputSoreThoat = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox2",
+        title: "Sore Throat",
+        value: "unchecked",
+      });
+      //input
+      var inputCough = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox3",
+        title: "Cough",
+        value: "unchecked",
+      });
+      //input
+      var inputShortnessOfBreath = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox4",
+        title: "Shortness of Breath",
+        value: "unchecked",
+      });
+
+      $(labelElOne).append(inputRunnyNose);
+      $(labelElTwo).append(inputSoreThoat);
+      $(labelElThree).append(inputCough);
+      $(labelElFour).append(inputShortnessOfBreath);
+      $(symptomsDiv).append(labelElOne, labelElTwo, labelElThree, labelElFour);
+      $("#questionField").append(testPara, symptomsDiv);
+
+      //var symptomsValue = [];
+      for (i = 0; i <= 4; i++) {
+        $("#checkbox" + i).change(function () {
+          if ($(this).attr("value") === "unchecked") {
+            $(this).attr("value", "checked");
+            console.log($(this).attr("title") + ": checked");
+          } else if ($(this).attr("value") === "checked") {
+            $(this).attr("value", "unchecked");
+            console.log($(this).attr("title") + ": unchecked");
+          }
+          //if ($("#checkbox input:checked") == true) {
+          //for (i = 1; i <= 4; i++) {
+          //  $("#checkbox" + i).change(function () {
+          //    console.log($(this).attr("value"));
+          //    $("#nextBtn").click(function () {
+          //addAnswer();
+          //    });
+          //   });
+          // }
+          // }
+
+          //    if ($(this).attr("value") === "checked") {
+          //      var checkedSymptoms = $(this).attr("title");
+          //      $(symptomsValue).push(checkedSymptoms);
+          //      console.log(checkedSymptoms);
+          //    }
+        });
+      }
+    });
+  }
+  function addSymptoms() {
+    for (i = 0; i < 4; i++) {
+      if ($(this).attr("value") === "checked") {
+        //var checkedSymptoms = $(this).attr("title");
+        alert("hello!");
+      }
+    }
+  }
+
   //functionality for the next question button
   $("#nextBtn").click(function () {
     if ($("#askQuestion input:checked").val() == null) {
@@ -237,52 +339,12 @@ function askQuestion() {
       $("#questionField").append(pleaseAnswer);
     } else {
       addAnswer();
+
       questionNum++;
       //the third question (index 2) has a few potential follow-up questions
       if (questionNum === 2) {
         askQuestion();
-        $("#yesBtn").click(function () {
-          var testPara = $("<p>").text(
-            "Please select any symptoms that apply:"
-          );
-          //div
-          var symptomsDiv = $("<div>");
-          //label
-          var labelEl = $("<label>").attr("class", "checkbox");
-          //input
-          var inputRunnyNose = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputRunnyNose).text("Runny Nose");
-          //input
-          var inputSoreThoat = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputSoreThoat).text("SoreThroat");
-          //input
-          var inputCough = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputCough).text("Cough");
-          //input
-          var inputShortnessOfBreath = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputShortnessOfBreath).text("Shortness Of Breath");
-
-          $(labelEl).append(
-            inputRunnyNose,
-            inputSoreThoat,
-            inputCough,
-            inputShortnessOfBreath
-          );
-          $(symptomsDiv).append(labelEl);
-          $("#questionField").append(testPara, symptomsDiv);
-        });
+        askSymptoms();
 
         //otherwise, just needs to ask questions
       } else if (questionNum < surveyQuestions.length && questionNum != 2) {
