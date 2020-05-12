@@ -3,6 +3,12 @@ var todayDate = moment().format("MM" + "-" + "DD" + "-" + "YY");
 //adding the date stamp to the survey
 $("#dateStamp").text(todayDate);
 
+//Default is employee is cleared for work
+// in later functions, a click listener is placed on the "yes" responses
+// if the employ answers yes, result will switch to telling them to return home
+// and seek medical advice
+localStorage.setItem("result", "Employ is cleared to work");
+
 //survey questions set as an array to be looped through
 var surveyQuestions = [
   "Have you been in close contact with a confirmed case of Covid-19?",
@@ -140,27 +146,32 @@ function askQuestion() {
   //clearing html
   $("#questionField").text("");
   //creating a paragraph and giving it an id = to its index in the surveyQuesions array
-  var question = $("<p>").attr("id", questionNum);
+  var question = $("<p>")
+    .attr("id", questionNum)
+    .css({ fontSize: "20px", paddingTop: "40px" });
   //adding question text
   $(question).text(surveyQuestions[questionNum]);
 
   //creating the next qusetion button
   var nextBtn = $("<button>")
     .attr({ class: "button", id: "nextBtn" })
-    .text("Next");
+    .text("Next")
+    .css("marginTop", "20px");
   //appendnig question to field
   $("#questionField").append(question);
 
   //adding yes or no control buttons
-  var radioAnswerdiv = $("<div>").attr({
-    class: "control",
-    id: "askQuestion",
-  });
+  var radioAnswerdiv = $("<div>")
+    .attr({
+      class: "control",
+      id: "askQuestion",
+    })
+    .css("paddingTop", "20px");
   var yesLabel = $("<label>").attr("class", "radio");
   var inputYes = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
-    value: "yes",
+    value: "Yes",
     id: "yesBtn",
   });
 
@@ -168,11 +179,11 @@ function askQuestion() {
   var inputNo = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
-    value: "no",
+    value: "No",
   });
   //appending to field
-  $(yesLabel).text("yes ");
-  $(noLabel).text("no ");
+  $(yesLabel).text("Yes ");
+  $(noLabel).text("No ");
   $(yesLabel).append(inputYes);
   $(radioAnswerdiv).append(yesLabel);
   $(noLabel).append(inputNo);
@@ -180,16 +191,19 @@ function askQuestion() {
 
   $("#questionField").append(radioAnswerdiv);
   $("#questionField").append(nextBtn);
-
   //for taking the employee temperature
   function takeTemp() {
     $("#questionField").text("");
-    var header = $("<h1>").text("Employee Temperature");
-    var employeeTemp = $("<input>").attr({
-      class: "input",
-      type: "number",
-      id: "employeeTemp",
-    });
+    var header = $("<h1>")
+      .text("Employee Temperature")
+      .css({ paddingBottom: "20px", paddingTop: "40px", fontSize: "20px" });
+    var employeeTemp = $("<input>")
+      .attr({
+        class: "input",
+        type: "number",
+        id: "employeeTemp",
+      })
+      .css({ marginBottom: "20px", fontSize: "20px" });
     var reviewBtn = $("<button>").attr({
       class: "button",
       id: "reviewBtn",
@@ -203,6 +217,12 @@ function askQuestion() {
     var lsAnswers = sessionStorage.getItem("answers");
     var lsAnswersJSON = JSON.parse(lsAnswers);
     var answer = $("#askQuestion input:checked").val();
+    if ($("#askQuestion input:checked").val() === "Yes") {
+      localStorage.setItem(
+        "result",
+        "Employee Should Return Home and Seek Advice From a Medical Professional"
+      );
+    }
     var varName = "Question " + (parseInt(questionNum) + parseInt(1));
     var answerToAdd = {
       [varName]: answer,
@@ -221,68 +241,129 @@ function askQuestion() {
     var answerToAdd = {
       [varName]: answer,
     };
+
+    if (parseInt(answer) >= 100) {
+      localStorage.setItem(
+        "result",
+        "Employee Should Return Home and Seek Advice From a Medical Professional"
+      );
+    }
     var superObject = Object.assign(lsAnswersJSON, answerToAdd);
     console.log(superObject);
     var STRINGlsAnswersJSON = JSON.stringify(superObject);
     sessionStorage.setItem("answers", STRINGlsAnswersJSON);
   }
 
+  function askSymptoms() {
+    event.preventDefault();
+    $("#yesBtn").click(function () {
+      var testPara = $("<p>").text("Please select any symptoms that apply:");
+      //div
+      var symptomsDiv = $("<div>");
+      //label
+      var labelElOne = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Runny Nose")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElTwo = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Sore Throat")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElThree = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Cough")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElFour = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Shortness of Breath")
+        .css({ padding: "2px", margin: "2px" });
+      //input
+      var inputRunnyNose = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox1",
+        value: "unchecked",
+        title: "Runny Nose",
+      });
+      //input
+      var inputSoreThoat = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox2",
+        title: "Sore Throat",
+        value: "unchecked",
+      });
+      //input
+      var inputCough = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox3",
+        title: "Cough",
+        value: "unchecked",
+      });
+      //input
+      var inputShortnessOfBreath = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox4",
+        title: "Shortness of Breath",
+        value: "unchecked",
+      });
+
+      $(labelElOne).append(inputRunnyNose);
+      $(labelElTwo).append(inputSoreThoat);
+      $(labelElThree).append(inputCough);
+      $(labelElFour).append(inputShortnessOfBreath);
+      $(symptomsDiv).append(labelElOne, labelElTwo, labelElThree, labelElFour);
+      $("#questionField").append(testPara, symptomsDiv);
+
+      //var symptomsValue = [];
+      for (i = 0; i <= 4; i++) {
+        $("#checkbox" + i).change(function () {
+          if ($(this).attr("value") === "unchecked") {
+            $(this).attr("value", "checked");
+            console.log($(this).attr("title") + ": checked");
+            var symptom = $(this).attr("title");
+            console.log(symptom);
+            var emptyArray = [];
+            var symptomsArray = $(emptyArray).add(symptom);
+            console.log(symptomsArray);
+          } else if ($(this).attr("value") === "checked") {
+            $(this).attr("value", "unchecked");
+            console.log($(this).attr("title") + ": unchecked");
+          }
+        });
+      }
+    });
+  }
+  function addSymptoms() {
+    for (i = 0; i < 4; i++) {
+      if ($(this).attr("value") === "checked") {
+        //var checkedSymptoms = $(this).attr("title");
+        alert("hello!");
+      }
+    }
+  }
+
   //functionality for the next question button
   $("#nextBtn").click(function () {
     if ($("#askQuestion input:checked").val() == null) {
       event.preventDefault();
-      var pleaseAnswer = $("<p>")
-        .text("Please Pick Yes or No")
-        .css("color", "red");
+      var pleaseAnswer = $("<p>").text("Please Pick Yes or No").css({
+        color: "red",
+        fontSize: "20px",
+        display: "flex",
+        margin: " 0 auto",
+      });
       $("#questionField").append(pleaseAnswer);
     } else {
       addAnswer();
+
       questionNum++;
       //the third question (index 2) has a few potential follow-up questions
       if (questionNum === 2) {
         askQuestion();
-        $("#yesBtn").click(function () {
-          var testPara = $("<p>").text(
-            "Please select any symptoms that apply:"
-          );
-          //div
-          var symptomsDiv = $("<div>");
-          //label
-          var labelEl = $("<label>").attr("class", "checkbox");
-          //input
-          var inputRunnyNose = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputRunnyNose).text("Runny Nose");
-          //input
-          var inputSoreThoat = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputSoreThoat).text("SoreThroat");
-          //input
-          var inputCough = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputCough).text("Cough");
-          //input
-          var inputShortnessOfBreath = $("<input>").attr({
-            type: "checkbox",
-            name: "answer",
-          });
-          $(inputShortnessOfBreath).text("Shortness Of Breath");
-
-          $(labelEl).append(
-            inputRunnyNose,
-            inputSoreThoat,
-            inputCough,
-            inputShortnessOfBreath
-          );
-          $(symptomsDiv).append(labelEl);
-          $("#questionField").append(testPara, symptomsDiv);
-        });
+        askSymptoms();
 
         //otherwise, just needs to ask questions
       } else if (questionNum < surveyQuestions.length && questionNum != 2) {
@@ -294,10 +375,30 @@ function askQuestion() {
         $("#reviewBtn").click(function () {
           addTemp();
           $("#questionField").text("");
-          var header = $("<h1>")
-            .text("Review Answers")
-            .css("text-align", "center");
-          var answerDisplayDiv = $("<div>").css("text-align", "center");
+          var header = $("<h1>").text("Review Answers").css({
+            textAlign: "center",
+            paddingTop: "30px",
+            paddingBottom: "20px",
+            fontSize: "30px",
+          });
+          var resultDiv = $("<div>").text(localStorage.getItem("result")).css({
+            textAlign: "center",
+            fontSize: "20px",
+            color: "red",
+            paddingBottom: "20px",
+          });
+          var answerDisplayDiv = $("<div>").css({
+            textAlign: "center",
+            paddingBottom: "20px",
+          });
+          var sumbitBtn = $("<button>")
+            .attr({ class: "button", id: "submitBtn" })
+            .text("Submit")
+            .css({
+              marginTop: "20px",
+              display: "flex",
+              margin: " 0 auto",
+            });
 
           var answersFromSessStor = sessionStorage.getItem("answers");
           var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
@@ -308,7 +409,12 @@ function askQuestion() {
             $(answerDisplayDiv).append(answerPara);
           }
 
-          $("#questionField").append(header, answerDisplayDiv);
+          $("#questionField").append(
+            header,
+            resultDiv,
+            answerDisplayDiv,
+            sumbitBtn
+          );
         });
       }
     }
