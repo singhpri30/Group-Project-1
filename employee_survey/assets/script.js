@@ -7,7 +7,7 @@ $("#dateStamp").text(todayDate);
 // in later functions, a click listener is placed on the "yes" responses
 // if the employ answers yes, result will switch to telling them to return home
 // and seek medical advice
-localStorage.setItem("result", "Employ is cleared to work");
+localStorage.setItem("result", "Employee is cleared to work");
 
 //survey questions set as an array to be looped through
 var surveyQuestions = [
@@ -486,52 +486,73 @@ function askQuestion() {
 
             var answersToLocalStorageObject = [];
 
+            //adding answers from session storage to display on review page
             //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
             for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
               var answerPara = $("<p>").text(`${key}: ${value}`);
               $(answerDisplayDiv).append(answerPara);
 
-              var answerToLSObj = `${key}: ${value}`;
+              var answerToLSObj = `${value}`;
               answersToLocalStorageObject.push(answerToLSObj);
             }
             console.log(answersToLocalStorageObject);
 
+            //getting symptoms stored in session storage
+            var symptomsToDisplay = sessionStorage.getItem("symptoms");
+
+            //if there is a value to the symptoms key in session storage
+            if (symptomsToDisplay.length !== 0) {
+              //parse it to an object
+              var symptomsToDisplayJSON = JSON.parse(symptomsToDisplay);
+
+              //use .join(", ") to combine into a string with a comma and a space to separate
+              //https://www.geeksforgeeks.org/javascript-array-join-method/
+              var symptomsString = symptomsToDisplayJSON.join(", ");
+              //add a paragraph that will read Symptoms: symptom, symptom (etc.)
+              var symptomsParagraph = $("<p>").text(
+                "Symptoms: " + symptomsString
+              );
+              //append to review page results
+              $(answerPara).append(symptomsParagraph);
+
+              //if there is no value to the symptoms key
+            } else {
+              //symptoms string is blank (used later for local storage)
+              var symptomsString = "";
+              //make a paraghraph that just says "no symptoms"
+              var symptomsParagraph = $("<p>").text("Symptoms: None");
+              //append
+              $(answerPara).append(symptomsParagraph);
+            }
+            //append everything to the page
             $("#questionField").append(
               header,
               resultDiv,
               answerDisplayDiv,
               submitBtn
             );
+
+            //when submit button is clicked
             $(submitBtn).click(function () {
-              var symptomsToDisplay = sessionStorage.getItem("symptoms");
-
-              if (symptomsToDisplay.length !== 0) {
-                var symptomsToDisplayJSON = JSON.parse(symptomsToDisplay);
-
-                //https://www.geeksforgeeks.org/javascript-array-join-method/
-                var symptomsString = symptomsToDisplayJSON.join(", ");
-                var symptomsParagraph = $("<p>").text(
-                  "Symptoms: " + symptomsString
-                );
-                $(answerPara).append(symptomsParagraph);
-              } else {
-                var symptomsString = "";
-                var symptomsParagraph = $("<p>").text("Symptoms: ");
-                $(answerPara).append(symptomsParagraph);
-              }
-              var symptomsToLS = "Symptoms: " + symptomsString;
+              //add symptoms to the answersToLocalStorageObject
+              var symptomsToLS = symptomsString;
               answersToLocalStorageObject.push(symptomsToLS);
-              console.log(answersToLocalStorageObject);
 
+              //if there is no "answers" key in local storage
               if (localStorage.getItem("answers") === null) {
+                //add answers to local storage
                 answersJSON = JSON.stringify(answersToLocalStorageObject);
                 localStorage.setItem("answers", answersJSON);
               } else {
+                //if there is an "answers" key pull from local storage
                 var answerFromLS = localStorage.getItem("answers");
                 answerFromLSJSON = JSON.parse(answerFromLS);
 
+                //loop through the answers from most recent submission
                 for (i = 0; i < answersToLocalStorageObject.length; i++) {
+                  //and add to the end of the object from local storage
                   answerFromLSJSON.push(answersToLocalStorageObject[i]);
+                  //resubmit to local storage
                   answerJSON = JSON.stringify(answerFromLSJSON);
                   localStorage.setItem("answers", answerJSON);
                 }

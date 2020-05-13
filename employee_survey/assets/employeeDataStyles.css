@@ -17,3 +17,12 @@
   -o-background-size: cover;
   background-size: cover;
 }
+th {
+  position: sticky;
+}
+
+#dataGrid {
+  margin-top: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
