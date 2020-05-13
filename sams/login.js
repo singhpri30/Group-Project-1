@@ -45,7 +45,7 @@ function getInfo() {
       password == existingEntries[i].password
     ) {
       // if login credentials match, divert user to employee data page (currently coded to go to resources page)
-      window.open("resources.html");
+      window.open("employeeData.html");
       return;
     }
   }
