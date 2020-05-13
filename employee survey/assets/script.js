@@ -18,6 +18,14 @@ var surveyQuestions = [
   "Have you experienced any new change in your sense of taste or smell?",
 ];
 
+var abbreviatedQuestion = [
+  "Contact with Covid-19",
+  "Fever in last 72 hours",
+  "Respiratory symptoms",
+  "Muscle aches or chills",
+  "Change to taste or smell",
+];
+
 //for looping through questions
 var questionNum = 0;
 
@@ -99,46 +107,94 @@ $("#addEmployee").one("click", function () {
 
 //when start button is clicked
 $("#startBtn").click(function () {
-  //for looping through the admins in local storage
-  var adminList = $("#adminName > option");
-  var adminArrayLS = [];
+  if ($("#adminName option:selected").val() === "Admin Name") {
+    if ($(pleaseSelect).length) {
+      pleaseSelect.remove();
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+      $("#questionField").append(pleaseSelect);
+    } else {
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+    }
+    $("#questionField").append(pleaseSelect);
+  } else if ($("#employeeName option:selected").val() === "Employee Name") {
+    if ($(pleaseSelect).length) {
+      pleaseSelect.remove();
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+      $("#questionField").append(pleaseSelect);
+    } else {
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+    }
+  } else {
+    //for looping through the admins in local storage
+    var adminList = $("#adminName > option");
+    var adminArrayLS = [];
 
-  //looping through employees in ls
-  var employeeList = $("#employeeName > option");
-  var employeeArrayLS = [];
+    //looping through employees in ls
+    var employeeList = $("#employeeName > option");
+    var employeeArrayLS = [];
 
-  //looping through admins and adding them to an array
-  for (i = 1; i < adminList.length; i++) {
-    var adminItemText = $(adminList[i]).val();
-    adminArrayLS.push(adminItemText);
+    //looping through admins and adding them to an array
+    for (i = 1; i < adminList.length; i++) {
+      var adminItemText = $(adminList[i]).val();
+      adminArrayLS.push(adminItemText);
+    }
+    //looping through employees and adding to an array
+    for (i = 1; i < employeeList.length; i++) {
+      var employeeItemText = $(employeeList[i]).val();
+      employeeArrayLS.push(employeeItemText);
+    }
+    //adding both lists to local storage so they can be accessed again
+    adminArrayLSJSON = JSON.stringify(adminArrayLS);
+    employeeArrayLSJSON = JSON.stringify(employeeArrayLS);
+    localStorage.setItem("admin-json", adminArrayLSJSON);
+    localStorage.setItem("employee-json", employeeArrayLSJSON);
+
+    //creating an object to commit to session storage
+    //object contains answers provided on this table
+    var answersObject = {
+      Date: todayDate,
+      "Admin Name": $("#adminName option:selected").val(),
+      "Employee Name": $("#employeeName option:selected").val(),
+    };
+    //clearing out anything already in session storage
+    sessionStorage.clear();
+    sessionStorage.setItem("symptoms", "");
+
+    //adding to local storage
+    answersObjectJSON = JSON.stringify(answersObject);
+    sessionStorage.setItem("answers", answersObjectJSON);
+
+    //asking the first question
+    askQuestion();
   }
-  //looping through employees and adding to an array
-  for (i = 1; i < employeeList.length; i++) {
-    var employeeItemText = $(employeeList[i]).val();
-    employeeArrayLS.push(employeeItemText);
-  }
-  //adding both lists to local storage so they can be accessed again
-  adminArrayLSJSON = JSON.stringify(adminArrayLS);
-  employeeArrayLSJSON = JSON.stringify(employeeArrayLS);
-  localStorage.setItem("admin-json", adminArrayLSJSON);
-  localStorage.setItem("employee-json", employeeArrayLSJSON);
-
-  //creating an object to commit to session storage
-  //object contains answers provided on this table
-  var answersObject = {
-    Date: todayDate,
-    "Admin Name": $("#adminName option:selected").val(),
-    "Employee Name": $("#employeeName option:selected").val(),
-  };
-  //clearing out anything already in session storage
-  sessionStorage.clear();
-
-  //adding to local storage
-  answersObjectJSON = JSON.stringify(answersObject);
-  sessionStorage.setItem("answers", answersObjectJSON);
-
-  //asking the first question
-  askQuestion();
 });
 
 //asks questions in sequential order
@@ -156,7 +212,7 @@ function askQuestion() {
   var nextBtn = $("<button>")
     .attr({ class: "button", id: "nextBtn" })
     .text("Next")
-    .css("marginTop", "20px");
+    .css({ display: "flex", margin: " 0 auto", marginTop: "20px" });
   //appendnig question to field
   $("#questionField").append(question);
 
@@ -223,7 +279,7 @@ function askQuestion() {
         "Employee Should Return Home and Seek Advice From a Medical Professional"
       );
     }
-    var varName = "Question " + (parseInt(questionNum) + parseInt(1));
+    var varName = abbreviatedQuestion[questionNum];
     var answerToAdd = {
       [varName]: answer,
     };
@@ -257,9 +313,14 @@ function askQuestion() {
   function askSymptoms() {
     event.preventDefault();
     $("#yesBtn").click(function () {
-      var testPara = $("<p>").text("Please select any symptoms that apply:");
+      $("#nextBtn").remove();
+      var testPara = $("<p>")
+        .text("Please select any symptoms that apply:")
+        .css("marginTop", "10px");
       //div
-      var symptomsDiv = $("<div>");
+      var symptomsDiv = $("<div>").css({
+        marginBottom: "10px",
+      });
       //label
       var labelElOne = $("<label>")
         .attr({ class: "button is-checkbox" })
@@ -315,34 +376,40 @@ function askQuestion() {
       $(labelElThree).append(inputCough);
       $(labelElFour).append(inputShortnessOfBreath);
       $(symptomsDiv).append(labelElOne, labelElTwo, labelElThree, labelElFour);
-      $("#questionField").append(testPara, symptomsDiv);
+      $("#questionField").append(testPara, symptomsDiv, nextBtn);
+      $(nextBtn).click(function () {
+        addSymptoms();
+        addAnswer();
+        askQuestion();
+        questionNum++;
+      });
 
-      //var symptomsValue = [];
       for (i = 0; i <= 4; i++) {
         $("#checkbox" + i).change(function () {
           if ($(this).attr("value") === "unchecked") {
             $(this).attr("value", "checked");
             console.log($(this).attr("title") + ": checked");
-            var symptom = $(this).attr("title");
-            console.log(symptom);
-            var emptyArray = [];
-            var symptomsArray = $(emptyArray).add(symptom);
-            console.log(symptomsArray);
           } else if ($(this).attr("value") === "checked") {
             $(this).attr("value", "unchecked");
             console.log($(this).attr("title") + ": unchecked");
           }
         });
       }
-    });
-  }
-  function addSymptoms() {
-    for (i = 0; i < 4; i++) {
-      if ($(this).attr("value") === "checked") {
-        //var checkedSymptoms = $(this).attr("title");
-        alert("hello!");
+      function addSymptoms() {
+        var symptomsToAdd = [];
+        for (i = 0; i <= 4; i++) {
+          if ($("#checkbox" + i).attr("value") === "checked") {
+            var checkedSymptoms = $("#checkbox" + i).attr("title");
+            console.log(checkedSymptoms);
+
+            symptomsToAdd.push(checkedSymptoms);
+            console.log(symptomsToAdd);
+          }
+        }
+        var symptomsToAddJSON = JSON.stringify(symptomsToAdd);
+        sessionStorage.setItem("symptoms", symptomsToAddJSON);
       }
-    }
+    });
   }
 
   //functionality for the next question button
