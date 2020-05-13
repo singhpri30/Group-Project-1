@@ -12,7 +12,10 @@
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link
+      rel="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"
+    />
+    <link rel="stylesheet" href="assets/employeeDataStyles.css" />
   </head>
   <body>
     <section class="hero is-dark is-fullheight column is-mobile">
@@ -86,12 +89,13 @@
           </div>
         </nav>
       </div>
+      <div
+        class="container column is-two-thirds-tablet is-half-desktop"
+        id="dataGrid"
+      ></div>
     </section>
 
-    <div
-      class="container column is-two-thirds-tablet is-half-desktop"
-      id="dataGrid"
-    ></div>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="burgerBulma.js"></script>
 
