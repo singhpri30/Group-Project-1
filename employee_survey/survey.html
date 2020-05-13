@@ -26,9 +26,9 @@
               >
                 <h1>COVID-19 TRACKER</h1>
                 <!--<img
-                      src="http://bulma.io/images/bulma-type-white.png"
-                      alt="Logo"
-                    />-->
+                  src="http://bulma.io/images/bulma-type-white.png"
+                  alt="Logo"
+                />-->
               </a>
               <span class="navbar-burger burger" data-target="navbarMenu">
                 <span></span>
@@ -86,9 +86,40 @@
           </div>
         </nav>
       </div>
-    </section>
+
+
+
+
+    <div class="container column is-two-thirds-tablet is-half-desktop" id="questionField">
+      <h1 id="qHeader">Daily Questions</h1>
+      <p id="date">Date: <span id="dateStamp"></span></p>
+      <div class="row">
+        <div class="row" id="employeeAdmin">
+          <h1 qSpace>Questionaire Administrator</h1>
+          <div class="select">
+           <select id="adminName">
+              <option>Admin Name</option>
+            </select>
+          </div>
+          <button class="button" id="addAdmin">Add Administrator</button>
+        </div>
+        <h1>Employee Name</h1>
+        <div class="row" id="newEmployee">
+          <div class="select">
+            <select id="employeeName">
+              <option>Employee Name</option>
+            </select>
+          </div>
+          <button class="button" id="addEmployee">Add New Employee</button>
+        </div>
+      </div>
+      <button class="button" id="startBtn">Begin</button>
+    </div>
+    
+  
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="burgerBulma.js"></script>
+   <script src="burgerBulma.js"></script>
 
     <script
       src="https://code.jquery.com/jquery-3.5.0.min.js"
@@ -96,6 +127,5 @@
       crossorigin="anonymous"
     ></script>
     <script src="assets/script.js"></script>
-    <script src="assets/employeeDataScript.js"></script>
   </body>
 </html>

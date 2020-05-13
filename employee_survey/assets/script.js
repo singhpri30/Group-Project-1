@@ -440,48 +440,121 @@ function askQuestion() {
       } else {
         takeTemp();
         $("#reviewBtn").click(function () {
-          addTemp();
-          $("#questionField").text("");
-          var header = $("<h1>").text("Review Answers").css({
-            textAlign: "center",
-            paddingTop: "30px",
-            paddingBottom: "20px",
-            fontSize: "30px",
-          });
-          var resultDiv = $("<div>").text(localStorage.getItem("result")).css({
-            textAlign: "center",
-            fontSize: "20px",
-            color: "red",
-            paddingBottom: "20px",
-          });
-          var answerDisplayDiv = $("<div>").css({
-            textAlign: "center",
-            paddingBottom: "20px",
-          });
-          var sumbitBtn = $("<button>")
-            .attr({ class: "button", id: "submitBtn" })
-            .text("Submit")
-            .css({
-              marginTop: "20px",
-              display: "flex",
-              margin: " 0 auto",
+          if ($("#employeeTemp").val() == "") {
+            event.preventDefault();
+            var pleaseAnswer = $("<p>")
+              .text("Please Enter Employee Temperature")
+              .css({
+                color: "red",
+                fontSize: "20px",
+                display: "flex",
+                margin: " 0 auto",
+              });
+            $("#questionField").append(pleaseAnswer);
+          } else {
+            addTemp();
+            $("#questionField").text("");
+            var header = $("<h1>").text("Review Answers").css({
+              textAlign: "center",
+              paddingTop: "30px",
+              paddingBottom: "20px",
+              fontSize: "30px",
             });
+            var resultDiv = $("<div>")
+              .text(localStorage.getItem("result"))
+              .css({
+                textAlign: "center",
+                fontSize: "20px",
+                color: "red",
+                paddingBottom: "20px",
+              });
+            var answerDisplayDiv = $("<div>").css({
+              textAlign: "center",
+              paddingBottom: "20px",
+            });
+            var submitBtn = $("<button>")
+              .attr({ class: "button", id: "submitBtn" })
+              .text("Submit")
+              .css({
+                marginTop: "20px",
+                display: "flex",
+                margin: " 0 auto",
+              });
 
-          var answersFromSessStor = sessionStorage.getItem("answers");
-          var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
+            var answersFromSessStor = sessionStorage.getItem("answers");
+            var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
 
-          //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-          for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
-            var answerPara = $("<p>").text(`${key}: ${value}`);
-            $(answerDisplayDiv).append(answerPara);
+            var answersToLocalStorageObject = [];
+
+            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+            for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
+              var answerPara = $("<p>").text(`${key}: ${value}`);
+              $(answerDisplayDiv).append(answerPara);
+
+              var answerToLSObj = `${key}: ${value}`;
+              answersToLocalStorageObject.push(answerToLSObj);
+            }
+            console.log(answersToLocalStorageObject);
+
+            $("#questionField").append(
+              header,
+              resultDiv,
+              answerDisplayDiv,
+              submitBtn
+            );
+            $(submitBtn).click(function () {
+              var symptomsToDisplay = sessionStorage.getItem("symptoms");
+
+              if (symptomsToDisplay.length !== 0) {
+                var symptomsToDisplayJSON = JSON.parse(symptomsToDisplay);
+
+                //https://www.geeksforgeeks.org/javascript-array-join-method/
+                var symptomsString = symptomsToDisplayJSON.join(", ");
+                var symptomsParagraph = $("<p>").text(
+                  "Symptoms: " + symptomsString
+                );
+                $(answerPara).append(symptomsParagraph);
+              } else {
+                var symptomsString = "";
+                var symptomsParagraph = $("<p>").text("Symptoms: ");
+                $(answerPara).append(symptomsParagraph);
+              }
+              var symptomsToLS = "Symptoms: " + symptomsString;
+              answersToLocalStorageObject.push(symptomsToLS);
+              console.log(answersToLocalStorageObject);
+
+              if (localStorage.getItem("answers") === null) {
+                answersJSON = JSON.stringify(answersToLocalStorageObject);
+                localStorage.setItem("answers", answersJSON);
+              } else {
+                var answerFromLS = localStorage.getItem("answers");
+                answerFromLSJSON = JSON.parse(answerFromLS);
+
+                for (i = 0; i < answersToLocalStorageObject.length; i++) {
+                  answerFromLSJSON.push(answersToLocalStorageObject[i]);
+                  answerJSON = JSON.stringify(answerFromLSJSON);
+                  localStorage.setItem("answers", answerJSON);
+                }
+              }
+
+              $("#questionField").text("");
+              var finalMessage = $("<p>")
+                .text("Thank You! Your Answers Have Been Submitted")
+                .css({ fontSize: "20px", display: "flex", margin: " 0 auto" });
+              var goToEmpData = $("<button>")
+                .attr("class", "button")
+                .text("Employee Data");
+              var newEmpSurvey = $("<button>")
+                .attr("class", "button")
+                .text("New Employee Survey");
+
+              $("#questionField").append(
+                finalMessage,
+                newEmpSurvey,
+                goToEmpData
+              );
+            });
           }
-
-          $("#questionField").append(
-            header,
-            resultDiv,
-            answerDisplayDiv,
-            sumbitBtn
-          );
         });
       }
     }
