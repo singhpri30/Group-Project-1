@@ -476,6 +476,16 @@ function askQuestion() {
             $(answerDisplayDiv).append(answerPara);
           }
 
+          var symptomsToDisplay = sessionStorage.getItem("symptoms");
+          console.log(symptomsToDisplay);
+          //var symptomsToSubmit = "";
+          var symptomsToDisplayJSON = JSON.parse(symptomsToDisplay);
+
+          //https://www.geeksforgeeks.org/javascript-array-join-method/
+          var symptomsString = symptomsToDisplayJSON.join(", ");
+          var symptomsParagraph = $("<p>").text("Symptoms: " + symptomsString);
+          $(answerPara).append(symptomsParagraph);
+
           $("#questionField").append(
             header,
             resultDiv,
