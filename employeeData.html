@@ -15,7 +15,10 @@
     <link
       rel="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"
     />
-    <link rel="stylesheet" href="employee_survey/assets/employeeDataStyles.css" />
+    <link
+      rel="stylesheet"
+      href="employee_survey/assets/employeeDataStyles.css"
+    />
   </head>
   <body>
     <section class="hero is-dark is-fullheight column is-mobile">
@@ -23,10 +26,7 @@
         <nav class="navbar">
           <div class="container">
             <div class="navbar-brand">
-              <a
-                class="navbar-item has-text-white is-size-4"
-                href="index.html"
-              >
+              <a class="navbar-item has-text-white is-size-4" href="index.html">
                 <h1>COVID-19 TRACKER</h1>
                 <!--<img
                       src="http://bulma.io/images/bulma-type-white.png"
@@ -42,10 +42,7 @@
             <div id="navbarMenu" class="navbar-menu">
               <div class="navbar-end">
                 <span class="navbar-item">
-                  <a
-                    class="button is-white is-outlined"
-                    href="index.html"
-                  >
+                  <a class="button is-white is-outlined" href="index.html">
                     <span class="icon">
                       <i class="fa fa-home"></i>
                     </span>
@@ -61,7 +58,7 @@
                   </a>
                 </span>
                 <span class="navbar-item">
-                  <a class="button is-white is-outlined" href="covidNews.html">
+                  <a class="button is-white is-outlined" href="news.html">
                     <span class="icon">
                       <i class="fa fa-book"></i>
                     </span>
@@ -89,10 +86,11 @@
           </div>
         </nav>
       </div>
-      <table class="table" id="dataGrid">
+
+      <table class="table column is-mobile" id="dataGrid">
         <thead>
           <tr>
-            <th><abbr title="Date">Date</abbr></th>
+            <th><abbr title="Date">Date Recorded</abbr></th>
             <th><abbr title="AdminName">Admin Name</abbr></th>
             <th><abbr title="EmployeeName">Employee Name</abbr></th>
             <th><abbr title="Contact">Contact with Covid-19?</abbr></th>
@@ -101,9 +99,10 @@
             <th><abbr title="Aches">Muscle aches or chills?</abbr></th>
             <th><abbr title="Taste">Change to taste or smell?</abbr></th>
             <th><abbr title="Temp">Employee Temperature</abbr></th>
-            <th><abbr title="Symptoms">Symptoms</abbr></th>
+            <th><abbr title="Symptoms">Respritory Symptoms</abbr></th>
           </tr>
         </thead>
+      </table>
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

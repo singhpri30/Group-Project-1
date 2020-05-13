@@ -20,9 +20,9 @@
     <section class="hero is-dark is-fullheight">
         <div class="hero-head">
             <nav class="navbar">
-                <div class="container">
+                <div id="navbar-section" class="container">
                     <div class="navbar-brand">
-                        <a class="navbar-item has-text-white is-size-4" href="landingPage.html">
+                        <a class="navbar-item has-text-white is-size-4" href="index.html">
                             <h1>COVID-19 SCREENING TRACKER</h1>
                         </a>
                         <span class="navbar-burger burger" data-target="navbarMenu">
@@ -34,7 +34,7 @@
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="landingPage.html">
+                                <a class="button is-white is-outlined" href="index.html">
                                     <span class="icon">
                                         <i class="fa fa-home"></i>
                                     </span>
@@ -42,7 +42,7 @@
                                 </a>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="resources.html">
+                                <a class="button is-white is-outlined" href="sams/resources.html">
                                     <span class="icon">
                                         <i class="fa fa-superpowers"></i>
                                     </span>
@@ -66,7 +66,7 @@
                                 </a>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="login.html">
+                                <a class="button is-white is-outlined" href="sams/login.html">
                                     <span class="icon">
                                         <i class="fa fa-key"></i>
                                     </span>
@@ -148,13 +148,11 @@
 
                             <div id="dataSection" class="columns is-multiline">
                                 <div class="column">
-                                    <div class="box notification is-primary">
+                                    <div id="global-column" class="box notification is-primary">
                                         <div class="heading">Globally</div>
 
                                         <div id="images">
-                                            <img id="img1"
-                                                src="https://images.unsplash.com/photo-1579781403337-de692320718a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
-                                                alt="Image">
+                                            <img id="img1" src="assets/images/covid-19-image.png" alt="Image">
                                         </div>
                                         <div class="title">Total Cases: <span id="global-stats">
                                             </span>
@@ -168,12 +166,10 @@
                                     </div>
                                 </div>
                                 <div class="column">
-                                    <div class="box notification is-warning">
+                                    <div id="usa-column" class="box notification is-warning">
                                         <div class="heading">U.S.A</div>
                                         <div id="images">
-                                            <img id="img1"
-                                                src="https://images.unsplash.com/photo-1581629485251-13922d434e39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
-                                                alt="Image">
+                                            <img id="img1" src="assets/images/usa-flag.png" alt="Image">
                                         </div>
                                         <div class="title">Total Cases: <span id="usa-stats">
                                             </span>
@@ -187,12 +183,10 @@
                                     </div>
                                 </div>
                                 <div class="column">
-                                    <div class="box notification is-info">
+                                    <div id="nh-column" class="box notification is-info">
                                         <div class="heading">New Hampshire</div>
                                         <div id="images">
-                                            <img id="img1"
-                                                src="https://images.unsplash.com/photo-1574447398998-d6ff6bb02480?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80"
-                                                alt="Image">
+                                            <img id="img1" src="assets/images/New_Hampshire.png" alt="Image">
                                         </div>
                                         <div class="title">Total Cases: <span id="nh-stats">
                                             </span>
@@ -208,9 +202,6 @@
 
                             </div>
 
-                            <div id="dataSection" class="columns is-multiline">
-
-                            </div>
 
 
                             <div id="dataSection" class="columns is-multiline">
@@ -235,9 +226,14 @@
                                             <canvas id="chart"></canvas>
                                         </div>
                                     </article>
+                                </div>
+                            </div>
+                            <div id="dataSection" class="columns is-multiline">
+
+                                <div class="column is-full">
                                     <article class="message is-dark">
                                         <div class="message-header">
-                                            <p>NH Chart</p>
+                                            <p>New Hampshire County Chart</p>
                                         </div>
                                         <div id="nhChart-body" class="message-body">
                                             <canvas id="nhChart"></canvas>
