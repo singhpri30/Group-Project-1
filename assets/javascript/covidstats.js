@@ -65,16 +65,16 @@ $.ajax({
 
 
 //**********this code is to display Global data */
-var queryURL = "https://api.covid19api.com/summary"; //api to fetch the data
+var queryURL = "https://coronavirus-19-api.herokuapp.com/countries"; //api to fetch the data
 $.ajax({
     url: queryURL,
     method: 'GET',
 }).then(function (response) {
 
     //fetching the responses and storing in the variables
-    var totalConfirmed = response.Global.TotalConfirmed;
-    var totalDeaths = response.Global.TotalDeaths;
-    var totalRecovered = response.Global.TotalRecovered;
+    var totalConfirmed = response[0].cases;
+    var totalDeaths = response[0].deaths;
+    var totalRecovered = response[0].recovered;
 
     //displaying the responses in different elements
     $("#global-stats").text(totalConfirmed);
@@ -84,17 +84,17 @@ $.ajax({
 });
 
 //**********this code is to display USA data */
-var usaQueryURL = "https://covidtracking.com/api/v1/us/current.json"; //api to fetch the data
+var usaQueryURL = "https://coronavirus-19-api.herokuapp.com/countries"; //api to fetch the data
 $.ajax({
     url: usaQueryURL,
     method: 'GET',
 }).then(function (response) {
 
     //fetching the responses and storing in the variables
-    var usaTotalConfirmed = response[0].total;
-    console.log(usaTotalConfirmed);
-    var usaTotalDeaths = response[0].death;
-    var usaTotalRecovered = response[0].recovered;
+    var usaTotalConfirmed = response[1].cases;
+
+    var usaTotalDeaths = response[1].deaths;
+    var usaTotalRecovered = response[1].recovered;
 
     //displaying the responses in different elements
     $("#usa-stats").text(usaTotalConfirmed);
@@ -175,7 +175,7 @@ function getData() { //getting data from third part
     }).then(function (response) {
         //console.log(response);
         // Create a new table row element
-        for (i = 101; i < 106; i++) { //for jan for (i = 0; i <= 10; i++) for (i = 10; i <= 38; i++)
+        for (i = 40; i < 107; i++) { //for jan for (i = 0; i <= 10; i++) for (i = 10; i <= 38; i++)
 
             var dateEl = response[i].Date;
             // console.log(dateEl);
