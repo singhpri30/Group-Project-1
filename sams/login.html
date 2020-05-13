@@ -109,7 +109,8 @@
                   <div class="control">
                     <input
                       class="input is-large"
-                      type="email"
+                      type="text"
+                      id="username"
                       placeholder="Your UserName"
                       autofocus=""
                     />
@@ -121,6 +122,7 @@
                     <input
                       class="input is-large"
                       type="password"
+                      id="password"
                       placeholder="Your Password"
                     />
                   </div>
@@ -131,9 +133,11 @@
                     Remember me
                   </label>
                 </div>-->
-                <button class="button is-block is-link is-large is-fullwidth">
+                <button class="button is-block is-link is-large is-fullwidth" id="button1">
                   Login <i class="fa fa-sign-in" aria-hidden="true"></i>
                 </button>
+                <br>
+                <p class="result" style="color:red"></p>
               </form>
              <!--</div>
           <p class="has-text-grey">
@@ -145,6 +149,74 @@
         </div>
       </div>
     </section>
-    <script async type="text/javascript" src="../js/bulma.js"></script>
+
+
+<!----jQuery CDN Link---->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+
+//------------------Function to accept login credentials-------------
+// Array of objects containing login credentials
+var loginBtn = document.getElementById("button1");
+var criteria = [
+	{ 
+		username: "sam",
+		password: "bonias"
+	},
+	{ 
+		username: "priyanka",
+		password: "singh"
+	},
+	{ 
+		username: "remi",
+		password: "ibraheem"
+	},
+	{ 
+		username: "ffej",
+		password: "caplan"
+	}
+]
+
+// click event for the login button to run function
+$("#button1").on("click", getInfo);
+
+
+function getInfo() {
+  //declare a variable to store the input from username input field
+	var username = document.getElementById('username').value;
+  //declare a variable to store the input from password input field
+	var password = document.getElementById('password').value;
+  //declare a variable to reference the tag that needs text output
+  var result = document.querySelector(".result");
+
+
+	for(var i = 0; i < criteria.length; i++) {
+		// check if user input matches username and password of a current index of the objPeople array
+		if(username == criteria[i].username && password == criteria[i].password) {
+      // if login credentials match, divert user to employee data page (currently coded to go to resources page)
+			// https://developer.mozilla.org/en-US/docs/Web/API/Window/open
+      window.open("resources.html");
+		}
+	}
+	//else notify of "incorrect username or password"
+  //needed to apply "event.preventDefault" due to output appearing then disappearing
+  event.preventDefault(result.textContent = "You've entered an incorrect userName or Password. Try again");
+  // https://www.w3schools.com/jsref/met_win_settimeout.asp
+  // https://www.w3schools.com/jsref/met_loc_reload.asp
+  // https://stackoverflow.com/questions/39407803/why-does-settimeoutlocation-reload-throw-a-typeerror/39407908
+  window.setTimeout(window.location.reload.bind(window.location), 2000);
+  //$("username").innerhtml.val("");
+  //$("password").innerhtml.val("");
+}
+
+
+// function clearInputs() {
+//   document.querySelector("username").textContent = "";
+//   document.querySelector("password").textContent = "";
+//   document.querySelector(".result").textContent = "";
+// }
+    </script>
   </body>
 </html>

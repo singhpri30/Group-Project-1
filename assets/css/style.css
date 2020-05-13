@@ -22,20 +22,27 @@
 /* Priyanka's CSS */
 /************************************************************************/
  #main{
-   border: 1px solid white;
+   border: 1px solid rgb(4, 16, 36);
+   width: 100%;
+height: auto;
+
  }
  .aside{
-  border: 1px solid white;
-  height: 100%;
+  border: 1px solid rgb(4, 16, 36);
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  margin: 0;
+ 
 }
 .heading{
-  font-size: 25px;
+  font-size: 20px;
   background-color: rgb(94, 92, 90);
   margin-bottom: 10px;
   color: bisque;
 }
 .title{
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 0;
   padding: 0;
   color: bisque;
@@ -44,18 +51,106 @@
   width: 100%;
   height: auto;
 }
-#score-table{
-  max-height:500px; /*example*/
-   overflow: auto; /* auto , scroll .. */
+#state-stats{
+  font-size: 18px;
+  margin-bottom: 10px;
+  
 }
+#usa-table{
+  max-height:900px; /*example*/
+   overflow: auto; /* auto , scroll .. */
+   margin-bottom: 10px;
+   
+}
+#nh-table{
+
+   overflow: auto; /* auto , scroll .. */
+   
+}
+
+table{
+  
+  width: 100%;
+  position: relative;
+}
+#usa-table tr:nth-child(even){
+background-color: #253386;
+  
+}
+#nh-table tr:nth-child(even){
+  background-color: #a6a807;
+    
+  }
+#usa-table tr:hover {
+  background-color: rgb(39, 38, 38);
+}
+#nh-table tr:hover {
+  background-color: rgb(39, 38, 38);
+}
+#usa-table th {
+  
+  color: white;
+  background-color: rgb(3, 4, 8);
+  position: sticky;
+  top: 0;
+  
+}
+#nh-table th {
+  
+  color: white;
+  background-color: rgb(3, 4, 8);
+  position: sticky;
+  top: 0;
+  
+}
+#usa-table td, #usa-table th {
+  border: 1px solid rgb(1, 0, 3);
+  padding: 6px;
+  text-align: center;
+}
+#nh-table td, #nh-table th {
+  border: 1px solid rgb(1, 0, 3);
+  padding: 6px;
+  text-align: center;
+}
+
 #dataSection{
-  background-color: rgb(3, 60, 95);
+  background-color: rgb(225, 233, 238);
   /* border: 1px solid black; */
   border-radius: 20px;
-  margin-top: 5px;
+  margin: 3px;
+}
+#search-month{
+  width: 100%;
+  margin-top: 10px;
 }
 
+#usaChart-body, #nhChart-body{
 
+  width: 60vw;
+  height: 30vw;
+  position: relative;
+}
+
+@media screen and (max-width: 980px) {
+  /*
+	  No specific rules for large screens at this time.
+	*/
+}
+
+/*media query for devices with max screen size 768px*/
+@media screen and (max-width: 768px) {
+  .container{
+    width: 100%;
+  }
+}
+
+/*media query for devices with max screen size 640px*/
+@media screen and (max-width: 640px) {
+  .container{
+    width: 100%;
+  }
+}
 
 
 /* ************************************************************************** */

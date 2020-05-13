@@ -3,6 +3,12 @@ var todayDate = moment().format("MM" + "-" + "DD" + "-" + "YY");
 //adding the date stamp to the survey
 $("#dateStamp").text(todayDate);
 
+//Default is employee is cleared for work
+// in later functions, a click listener is placed on the "yes" responses
+// if the employ answers yes, result will switch to telling them to return home
+// and seek medical advice
+localStorage.setItem("result", "Employ is cleared to work");
+
 //survey questions set as an array to be looped through
 var surveyQuestions = [
   "Have you been in close contact with a confirmed case of Covid-19?",
@@ -10,6 +16,14 @@ var surveyQuestions = [
   "Are you experiencing any respiratory symptoms, including a runny nose, sore throat, cough, or shortness of breath?",
   "Are you experiencing any new muscle aches or chills?",
   "Have you experienced any new change in your sense of taste or smell?",
+];
+
+var abbreviatedQuestion = [
+  "Contact with Covid-19",
+  "Fever in last 72 hours",
+  "Respiratory symptoms",
+  "Muscle aches or chills",
+  "Change to taste or smell",
 ];
 
 //for looping through questions
@@ -93,46 +107,94 @@ $("#addEmployee").one("click", function () {
 
 //when start button is clicked
 $("#startBtn").click(function () {
-  //for looping through the admins in local storage
-  var adminList = $("#adminName > option");
-  var adminArrayLS = [];
+  if ($("#adminName option:selected").val() === "Admin Name") {
+    if ($(pleaseSelect).length) {
+      pleaseSelect.remove();
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+      $("#questionField").append(pleaseSelect);
+    } else {
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+    }
+    $("#questionField").append(pleaseSelect);
+  } else if ($("#employeeName option:selected").val() === "Employee Name") {
+    if ($(pleaseSelect).length) {
+      pleaseSelect.remove();
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+      $("#questionField").append(pleaseSelect);
+    } else {
+      var pleaseSelect = $("<p>")
+        .text("Please Select a Name From The Dropdown")
+        .css({
+          color: "red",
+          fontSize: "20px",
+          display: "flex",
+          margin: " 0 auto",
+        });
+    }
+  } else {
+    //for looping through the admins in local storage
+    var adminList = $("#adminName > option");
+    var adminArrayLS = [];
 
-  //looping through employees in ls
-  var employeeList = $("#employeeName > option");
-  var employeeArrayLS = [];
+    //looping through employees in ls
+    var employeeList = $("#employeeName > option");
+    var employeeArrayLS = [];
 
-  //looping through admins and adding them to an array
-  for (i = 1; i < adminList.length; i++) {
-    var adminItemText = $(adminList[i]).val();
-    adminArrayLS.push(adminItemText);
+    //looping through admins and adding them to an array
+    for (i = 1; i < adminList.length; i++) {
+      var adminItemText = $(adminList[i]).val();
+      adminArrayLS.push(adminItemText);
+    }
+    //looping through employees and adding to an array
+    for (i = 1; i < employeeList.length; i++) {
+      var employeeItemText = $(employeeList[i]).val();
+      employeeArrayLS.push(employeeItemText);
+    }
+    //adding both lists to local storage so they can be accessed again
+    adminArrayLSJSON = JSON.stringify(adminArrayLS);
+    employeeArrayLSJSON = JSON.stringify(employeeArrayLS);
+    localStorage.setItem("admin-json", adminArrayLSJSON);
+    localStorage.setItem("employee-json", employeeArrayLSJSON);
+
+    //creating an object to commit to session storage
+    //object contains answers provided on this table
+    var answersObject = {
+      Date: todayDate,
+      "Admin Name": $("#adminName option:selected").val(),
+      "Employee Name": $("#employeeName option:selected").val(),
+    };
+    //clearing out anything already in session storage
+    sessionStorage.clear();
+    sessionStorage.setItem("symptoms", "");
+
+    //adding to local storage
+    answersObjectJSON = JSON.stringify(answersObject);
+    sessionStorage.setItem("answers", answersObjectJSON);
+
+    //asking the first question
+    askQuestion();
   }
-  //looping through employees and adding to an array
-  for (i = 1; i < employeeList.length; i++) {
-    var employeeItemText = $(employeeList[i]).val();
-    employeeArrayLS.push(employeeItemText);
-  }
-  //adding both lists to local storage so they can be accessed again
-  adminArrayLSJSON = JSON.stringify(adminArrayLS);
-  employeeArrayLSJSON = JSON.stringify(employeeArrayLS);
-  localStorage.setItem("admin-json", adminArrayLSJSON);
-  localStorage.setItem("employee-json", employeeArrayLSJSON);
-
-  //creating an object to commit to session storage
-  //object contains answers provided on this table
-  var answersObject = {
-    date: todayDate,
-    adminName: $("#adminName option:selected").val(),
-    employeeName: $("#employeeName option:selected").val(),
-  };
-  //clearing out anything already in session storage
-  sessionStorage.clear();
-
-  //adding to local storage
-  answersObjectJSON = JSON.stringify(answersObject);
-  sessionStorage.setItem("answers", answersObjectJSON);
-
-  //asking the first question
-  askQuestion();
 });
 
 //asks questions in sequential order
@@ -140,38 +202,44 @@ function askQuestion() {
   //clearing html
   $("#questionField").text("");
   //creating a paragraph and giving it an id = to its index in the surveyQuesions array
-  var question = $("<p>").attr("id", questionNum);
+  var question = $("<p>")
+    .attr("id", questionNum)
+    .css({ fontSize: "20px", paddingTop: "40px" });
   //adding question text
   $(question).text(surveyQuestions[questionNum]);
 
   //creating the next qusetion button
   var nextBtn = $("<button>")
     .attr({ class: "button", id: "nextBtn" })
-    .text("Next");
+    .text("Next")
+    .css({ display: "flex", margin: " 0 auto", marginTop: "20px" });
   //appendnig question to field
   $("#questionField").append(question);
 
   //adding yes or no control buttons
-  var radioAnswerdiv = $("<div>").attr({
-    class: "control",
-    id: "askQuestion",
-  });
+  var radioAnswerdiv = $("<div>")
+    .attr({
+      class: "control",
+      id: "askQuestion",
+    })
+    .css("paddingTop", "20px");
   var yesLabel = $("<label>").attr("class", "radio");
   var inputYes = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
-    value: "yes",
+    value: "Yes",
+    id: "yesBtn",
   });
 
   var noLabel = $("<label>").attr("class", "radio");
   var inputNo = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
-    value: "no",
+    value: "No",
   });
   //appending to field
-  $(yesLabel).text("yes ");
-  $(noLabel).text("no ");
+  $(yesLabel).text("Yes ");
+  $(noLabel).text("No ");
   $(yesLabel).append(inputYes);
   $(radioAnswerdiv).append(yesLabel);
   $(noLabel).append(inputNo);
@@ -179,40 +247,190 @@ function askQuestion() {
 
   $("#questionField").append(radioAnswerdiv);
   $("#questionField").append(nextBtn);
-
   //for taking the employee temperature
   function takeTemp() {
     $("#questionField").text("");
-    var header = $("<h1>").text("Employee Temperature");
-    var employeeTemp = $("<input>").attr({
-      class: "input",
-      type: "number",
-      id: "employeeTemp",
-    });
-    var submitBtn = $("<button>").attr({
+    var header = $("<h1>")
+      .text("Employee Temperature")
+      .css({ paddingBottom: "20px", paddingTop: "40px", fontSize: "20px" });
+    var employeeTemp = $("<input>")
+      .attr({
+        class: "input",
+        type: "number",
+        id: "employeeTemp",
+      })
+      .css({ marginBottom: "20px", fontSize: "20px" });
+    var reviewBtn = $("<button>").attr({
       class: "button",
-      id: "submitBtn",
+      id: "reviewBtn",
     });
-    $(submitBtn).text("Submit");
-    $("#questionField").append(header, employeeTemp, submitBtn);
+    $(reviewBtn).text("Review");
+    $("#questionField").append(header, employeeTemp, reviewBtn);
+  }
+
+  //adding answers to session storage
+  function addAnswer() {
+    var lsAnswers = sessionStorage.getItem("answers");
+    var lsAnswersJSON = JSON.parse(lsAnswers);
+    var answer = $("#askQuestion input:checked").val();
+    if ($("#askQuestion input:checked").val() === "Yes") {
+      localStorage.setItem(
+        "result",
+        "Employee Should Return Home and Seek Advice From a Medical Professional"
+      );
+    }
+    var varName = abbreviatedQuestion[questionNum];
+    var answerToAdd = {
+      [varName]: answer,
+    };
+    var superObject = Object.assign(lsAnswersJSON, answerToAdd);
+    console.log(superObject);
+    var STRINGlsAnswersJSON = JSON.stringify(superObject);
+    sessionStorage.setItem("answers", STRINGlsAnswersJSON);
+  }
+
+  function addTemp() {
+    var lsAnswers = sessionStorage.getItem("answers");
+    var lsAnswersJSON = JSON.parse(lsAnswers);
+    var answer = $("#employeeTemp").val();
+    var varName = "Employee Temperature";
+    var answerToAdd = {
+      [varName]: answer,
+    };
+
+    if (parseInt(answer) >= 100) {
+      localStorage.setItem(
+        "result",
+        "Employee Should Return Home and Seek Advice From a Medical Professional"
+      );
+    }
+    var superObject = Object.assign(lsAnswersJSON, answerToAdd);
+    console.log(superObject);
+    var STRINGlsAnswersJSON = JSON.stringify(superObject);
+    sessionStorage.setItem("answers", STRINGlsAnswersJSON);
+  }
+
+  function askSymptoms() {
+    event.preventDefault();
+    $("#yesBtn").click(function () {
+      $("#nextBtn").remove();
+      var testPara = $("<p>")
+        .text("Please select any symptoms that apply:")
+        .css("marginTop", "10px");
+      //div
+      var symptomsDiv = $("<div>").css({
+        marginBottom: "10px",
+      });
+      //label
+      var labelElOne = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Runny Nose")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElTwo = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Sore Throat")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElThree = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Cough")
+        .css({ padding: "2px", margin: "2px" });
+      var labelElFour = $("<label>")
+        .attr({ class: "button is-checkbox" })
+        .text("Shortness of Breath")
+        .css({ padding: "2px", margin: "2px" });
+      //input
+      var inputRunnyNose = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox1",
+        value: "unchecked",
+        title: "Runny Nose",
+      });
+      //input
+      var inputSoreThoat = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox2",
+        title: "Sore Throat",
+        value: "unchecked",
+      });
+      //input
+      var inputCough = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox3",
+        title: "Cough",
+        value: "unchecked",
+      });
+      //input
+      var inputShortnessOfBreath = $("<input>").attr({
+        type: "checkbox",
+        name: "answer",
+        id: "checkbox4",
+        title: "Shortness of Breath",
+        value: "unchecked",
+      });
+
+      $(labelElOne).append(inputRunnyNose);
+      $(labelElTwo).append(inputSoreThoat);
+      $(labelElThree).append(inputCough);
+      $(labelElFour).append(inputShortnessOfBreath);
+      $(symptomsDiv).append(labelElOne, labelElTwo, labelElThree, labelElFour);
+      $("#questionField").append(testPara, symptomsDiv, nextBtn);
+      $(nextBtn).click(function () {
+        addSymptoms();
+        addAnswer();
+        askQuestion();
+        questionNum++;
+      });
+
+      for (i = 0; i <= 4; i++) {
+        $("#checkbox" + i).change(function () {
+          if ($(this).attr("value") === "unchecked") {
+            $(this).attr("value", "checked");
+            console.log($(this).attr("title") + ": checked");
+          } else if ($(this).attr("value") === "checked") {
+            $(this).attr("value", "unchecked");
+            console.log($(this).attr("title") + ": unchecked");
+          }
+        });
+      }
+      function addSymptoms() {
+        var symptomsToAdd = [];
+        for (i = 0; i <= 4; i++) {
+          if ($("#checkbox" + i).attr("value") === "checked") {
+            var checkedSymptoms = $("#checkbox" + i).attr("title");
+            console.log(checkedSymptoms);
+
+            symptomsToAdd.push(checkedSymptoms);
+            console.log(symptomsToAdd);
+          }
+        }
+        var symptomsToAddJSON = JSON.stringify(symptomsToAdd);
+        sessionStorage.setItem("symptoms", symptomsToAddJSON);
+      }
+    });
   }
 
   //functionality for the next question button
   $("#nextBtn").click(function () {
     if ($("#askQuestion input:checked").val() == null) {
       event.preventDefault();
-      var pleaseAnswer = $("<p>")
-        .text("Please Pick Yes or No")
-        .css("color", "red");
+      var pleaseAnswer = $("<p>").text("Please Pick Yes or No").css({
+        color: "red",
+        fontSize: "20px",
+        display: "flex",
+        margin: " 0 auto",
+      });
       $("#questionField").append(pleaseAnswer);
     } else {
+      addAnswer();
+
       questionNum++;
       //the third question (index 2) has a few potential follow-up questions
       if (questionNum === 2) {
         askQuestion();
-        var testPara = $("<p>");
-        $(testPara).text("test");
-        $("#questionField").append(testPara);
+        askSymptoms();
 
         //otherwise, just needs to ask questions
       } else if (questionNum < surveyQuestions.length && questionNum != 2) {
@@ -221,6 +439,50 @@ function askQuestion() {
         //one all questions have been asked, just needs to
       } else {
         takeTemp();
+        $("#reviewBtn").click(function () {
+          addTemp();
+          $("#questionField").text("");
+          var header = $("<h1>").text("Review Answers").css({
+            textAlign: "center",
+            paddingTop: "30px",
+            paddingBottom: "20px",
+            fontSize: "30px",
+          });
+          var resultDiv = $("<div>").text(localStorage.getItem("result")).css({
+            textAlign: "center",
+            fontSize: "20px",
+            color: "red",
+            paddingBottom: "20px",
+          });
+          var answerDisplayDiv = $("<div>").css({
+            textAlign: "center",
+            paddingBottom: "20px",
+          });
+          var sumbitBtn = $("<button>")
+            .attr({ class: "button", id: "submitBtn" })
+            .text("Submit")
+            .css({
+              marginTop: "20px",
+              display: "flex",
+              margin: " 0 auto",
+            });
+
+          var answersFromSessStor = sessionStorage.getItem("answers");
+          var answersFromSessStorJSON = JSON.parse(answersFromSessStor);
+
+          //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+          for (let [key, value] of Object.entries(answersFromSessStorJSON)) {
+            var answerPara = $("<p>").text(`${key}: ${value}`);
+            $(answerDisplayDiv).append(answerPara);
+          }
+
+          $("#questionField").append(
+            header,
+            resultDiv,
+            answerDisplayDiv,
+            sumbitBtn
+          );
+        });
       }
     }
   });
