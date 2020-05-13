@@ -22,9 +22,10 @@
 /* Priyanka's CSS */
 /************************************************************************/
  #main{
-   border: 1px solid rgb(4, 16, 36);
-   width: 100%;
-height: auto;
+  border: 1px solid rgb(4, 16, 36);
+  width: 100%;
+  height: auto;
+  padding: 8px;
 
  }
  .aside{
@@ -118,7 +119,7 @@ background-color: #253386;
   background-color: rgb(225, 233, 238);
   /* border: 1px solid black; */
   border-radius: 20px;
-  margin: 3px;
+  margin: 5px;
 }
 #search-month{
   width: 100%;
@@ -131,11 +132,17 @@ background-color: #253386;
   height: 30vw;
   position: relative;
 }
+#global-column, #usa-column, #nh-column{
+  padding: 0;
+  width: 100%;
+  height: auto;
+  padding: 8px;
+}
 
-@media screen and (max-width: 980px) {
-  /*
-	  No specific rules for large screens at this time.
-	*/
+@media screen and (max-width: 1215px) {
+  #navbar-section{
+    margin: 0;
+  }
 }
 
 /*media query for devices with max screen size 768px*/
@@ -149,6 +156,20 @@ background-color: #253386;
 @media screen and (max-width: 640px) {
   .container{
     width: 100%;
+  }
+  #global-column, #usa-column, #nh-column{
+    width: 100%;
+    height: auto;
+  }
+  .heading{
+    font-size: 17px;
+    
+  }
+  #usaChart-body, #nhChart-body{
+
+    width: 80vw;
+    height: 40vh;
+    position: relative;
   }
 }
 
