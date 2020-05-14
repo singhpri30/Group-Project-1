@@ -61,30 +61,46 @@ function popArticles(articleList) {
   for (let i = 0; i < 20; i++) {
 //Dynamically created elements within the card
 
-    var cardEl = $("<div>").attr("class", "card");
-    var cardImgEl = $("<div>").attr("id", "card-image");
-    var imgFig = $("<figure>").attr("class", "image is-3by2");
+    var cardEl = $("<div>")
+    .attr("class", "card");
+    var cardImgEl = $("<div>")
+    .attr("id", "card-image");
+    var imgFig = $("<figure>")
+    .attr("class", "image is-3by2");
     var cardImage = $("<img>");
 
     //appended the elements within the div
     $(imgFig).append(cardImage);
     $(cardImgEl).append(imgFig);
-    $(cardEl).append(cardImgEl);
+    $(cardEl).append(cardImgEl)
+    .css("border", "solid 10px");
 
     //Dynamically created text element
-    var contentEl = $("<div>");
+    var contentEl = $("<div>")
+    .css({ "padding": "10px", "background-color": "darkgray" });
+   
     var titleEl = $("<h3>");
     var descEl = $("<div>").attr("id", "description");
     var articleLink = $("<a>").attr("id", "link");
     var publishedAt = $("<div>");
 
     //connect api text content to card
-    $(titleEl).text(articleList[i].title);
+    $(titleEl).text(articleList[i].title)
+    .css({ "font-weight": "bold", "margin-left": "10px" });
+
     console.log(articleList[i].title);
-    $(publishedAt).text(articleList[i].publishedAt);
-    $(descEl).text(articleList[i].description);
-    $(articleLink).attr("href", articleList[i].url);
-    $(articleLink).text("click to article");
+    
+    $(publishedAt).text(articleList[i].publishedAt)
+    .css("margin-left", "10px");
+    
+    $(descEl).text(articleList[i].description)
+    .css("margin-left", "10px");
+    
+    $(articleLink).attr("href", articleList[i].url)
+    .css("margin-left", "10px");
+    
+    $(articleLink).text("click to article")
+    .css("color", "darkblue");
 
     //appended the text elements within the div
     $(cardEl).append(contentEl, titleEl, publishedAt, descEl, articleLink);
