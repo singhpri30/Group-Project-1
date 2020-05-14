@@ -12,6 +12,11 @@ for (x = 0; x < columns; x++) {
   for (y = 0; y < rows; y++) {
     //dataEntry is equal to row input
     var dataEntry = $("<td>").text(employeeDataJSON[y + x * 10]);
+    if (dataEntry.html() === "Yes") {
+      dataEntry.css("backgroundColor", "red");
+    } else if (dataEntry.html() >= 100) {
+      dataEntry.css("backgroundColor", "red");
+    }
     //append input to row
     $(columnDiv).append(dataEntry);
   }

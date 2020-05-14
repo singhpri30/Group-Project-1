@@ -67,10 +67,13 @@ if (employeeEntryList == null) {
 //on click, an input field and add button appear
 //survey taker can add a name to the list
 $("#addAdmin").one("click", function () {
-  var nameInput = $("<input>").attr({ class: "input", id: "newAdminName" });
+  var nameInput = $("<input>")
+    .attr({ class: "input", id: "newAdminName" })
+    .css({ width: "300px", marginTop: "10px" });
   var addNameButton = $("<button>")
     .attr({ class: "btn", id: "addNewAdmin" })
-    .text("Add");
+    .text("Add")
+    .css({ width: "100px", height: "40px", marginTop: "10px" });
   var addNameToSelector = $("<option>");
   $("#employeeAdmin").append(nameInput);
   $("#employeeAdmin").append(addNameButton);
@@ -87,10 +90,13 @@ $("#addAdmin").one("click", function () {
 
 //same as above, but for employee field
 $("#addEmployee").one("click", function () {
-  var nameInput = $("<input>").attr({ class: "input", id: "newEmployeeName" });
+  var nameInput = $("<input>")
+    .attr({ class: "input", id: "newEmployeeName" })
+    .css({ width: "300px", marginTop: "10px" });
   var addNameButton = $("<button>")
     .attr({ class: "btn", id: "addNewEmployee" })
-    .text("Add");
+    .text("Add")
+    .css({ width: "100px", height: "40px", marginTop: "10px" });
   var addNameToSelector = $("<option>");
   $(addNameButton).attr("id", "addNewEmployee");
   $("#newEmployee").append(nameInput);
@@ -258,6 +264,9 @@ function askQuestion() {
         class: "input",
         type: "number",
         id: "employeeTemp",
+        max: "105",
+        min: "97",
+        step: ".1",
       })
       .css({ marginBottom: "20px", fontSize: "20px" });
     var reviewBtn = $("<button>").attr({
@@ -561,19 +570,41 @@ function askQuestion() {
               $("#questionField").text("");
               var finalMessage = $("<p>")
                 .text("Thank You! Your Answers Have Been Submitted")
-                .css({ fontSize: "20px", display: "flex", margin: " 0 auto" });
-              var goToEmpData = $("<button>")
-                .attr("class", "button")
-                .text("Employee Data");
+                .css({
+                  fontSize: "30px",
+                  display: "flex",
+                  textAlign: "center",
+                  marginTop: "40px",
+                });
+              var goToEmpData = $("<a>")
+                .attr({ class: "button", href: "employeeData.html" })
+                .text("Employee Data")
+                .css({
+                  display: "flex",
+                  margin: " 0 auto",
+                  width: "200px",
+                  marginTop: "10px",
+                });
               var newEmpSurvey = $("<button>")
                 .attr("class", "button")
-                .text("New Employee Survey");
+                .text("New Employee Survey")
+                .css({
+                  display: "flex",
+                  margin: " 0 auto",
+                  width: "200px",
+                  marginBottom: "10px",
+                  marginTop: "20px",
+                });
 
               $("#questionField").append(
                 finalMessage,
                 newEmpSurvey,
                 goToEmpData
               );
+
+              $(newEmpSurvey).click(function () {
+                location.reload();
+              });
             });
           }
         });
