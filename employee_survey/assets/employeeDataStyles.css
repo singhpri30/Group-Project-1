@@ -17,8 +17,13 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+/* https://css-tricks.com/position-sticky-and-table-headers/ */
 th {
+  top: 0;
   position: sticky;
+  background-color: white;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 
 #dataGrid {
