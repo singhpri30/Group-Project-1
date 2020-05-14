@@ -40,7 +40,7 @@ function getArticles(topic) {
   }
 
   //Add the category param only if it exists, otherwise nothing, makes search parameters flexible
-  var queryURL = `http://newsapi.org/v2/top-headlines?country=us${topicString}&apiKey=5c9461f2787b49e1a8dc82cb0c1ad839`;
+  var queryURL = `https://newsapi.org/v2/top-headlines?country=us${topicString}&apiKey=5c9461f2787b49e1a8dc82cb0c1ad839`;
   console.log(queryURL);
   $.ajax({
     url: queryURL,
