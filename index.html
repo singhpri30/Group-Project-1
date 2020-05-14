@@ -22,12 +22,8 @@
             <nav class="navbar">
                 <div class="container">
                     <div class="navbar-brand">
-                        <a class="navbar-item has-text-white is-size-4" href="landingPage.html">
+                        <a class="navbar-item has-text-white is-size-4" href="index.html">
                             <h1>COVID-19 SCREENING TRACKER</h1>
-                            <!--<img
-                  src="http://bulma.io/images/bulma-type-white.png"
-                  alt="Logo"
-                />-->
                         </a>
                         <span class="navbar-burger burger" data-target="navbarMenu">
                             <span></span>
@@ -38,7 +34,7 @@
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="landingPage.html">
+                                <a class="button is-white is-outlined" href="index.html">
                                     <span class="icon">
                                         <i class="fa fa-home"></i>
                                     </span>
@@ -100,16 +96,19 @@
                     </h2>
                     <br />
                     <div class="field">
-                        <button class="button is-link is-large">
-                            Start Your Screening&nbsp;
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
-                        </button>
+                        <a href="survey.html"><button class="button is-link is-large">
+                                Start Your Screening&nbsp;
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </button> </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script async type="text/javascript" src="../js/bulma.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="assets/javascript/covidstats.js"></script>
 </body>
 
 </html>
