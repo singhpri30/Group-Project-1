@@ -1,5 +1,10 @@
 var usaStateTotal = "https://covidtracking.com/api/v1/states/current.json";
 var nhCountyTotal = "https://corona.lmao.ninja/v2/historical/usacounties/new%20hampshire?lastdays=1";
+var ctx = document.getElementById('chart').getContext('2d');
+var dateArray = [];
+var confirmedArray = [];
+var deathsArray = [];
+var recoveredArray = [];
 
 
 // *****this code is for creating a table to populate usa state data
@@ -127,81 +132,154 @@ $.ajax({
 
 
 //**********this code is to create usa chart and display data on it */
-var countryTotal = "https://api.covid19api.com/total/country/united-states"; //api to fetch the data
+var usaDateWiseData = "https://covidtracking.com/api/us/daily";
+//var selectMonth = $("#search-month").val();
+//console.log(selectMonth);
+
+$("#months").on("change", function () {
+
+    console.log(this.value);
+    $("#months").val(this.value);
+    getData(this.value);
+})
 
 
-var dateArray = [];
-var confirmedArray = [];
-var activeArray = [];
-var deathsArray = [];
-var recoveredArray = [];
-
-var chartData = {
-    labels: dateArray, //dates x-axis
-    datasets: [{
-        type: 'bar', //chart type
-        label: 'Confirmed Cases',
-        data: confirmedArray,
-        backgroundColor: 'rgba(54, 162, 235)',//blue first data set
-        borderWidth: 2,
-    }, {
-        type: 'bar',
-        label: 'Active Cases',
-        data: activeArray,
-        backgroundColor: 'rgba(255, 206, 86)',//yellow
-        borderWidth: 2,
-
-    }, {
-        type: 'bar',
-        label: 'Recovered cases',
-        data: recoveredArray,
-        backgroundColor: 'rgba(0,128,0)',//green 
-        borderWidth: 2,
-    }, {
-        type: 'bar',
-        label: 'Deaths',
-        data: deathsArray,
-        backgroundColor: 'rgba(255, 0, 0)',//red
-        borderWidth: 2,
-    }]
-};
-
-
-getData();
-function getData() { //getting data from third part
+getData("May");
+function getData(month) { //getting data from third party
     $.ajax({
-        url: countryTotal,
+        url: usaDateWiseData,
         method: 'GET',
     }).then(function (response) {
-        //console.log(response);
-        // Create a new table row element
-        for (i = 40; i < 107; i++) { //for jan for (i = 0; i <= 10; i++) for (i = 10; i <= 38; i++)
 
-            var dateEl = response[i].Date;
-            // console.log(dateEl);
-            var confirmnedEl = response[i].Confirmed;
-            var DeathsEl = response[i].Deaths;
-            var RecoveredEl = response[i].Recovered;
-            var ActiveEl = response[i].Active;
-            var dt = moment(dateEl).format("MMMM Do");
-            //console.log(dt);
-            dateArray.push(dt);
-            confirmedArray.push(confirmnedEl);
-            //console.log(yLables);
-            activeArray.push(ActiveEl);
-            recoveredArray.push(RecoveredEl);
-            deathsArray.push(DeathsEl);
-            //console.log(xLabels1);
+        console.log(response);
+
+        if (month === "May") {
+            dateArray.length = 0;
+            console.log(dateArray.length);
+            confirmedArray.length = 0;
+
+            recoveredArray.length = 0;
+            deathsArray.length = 0;
+            for (i = 0; i <= 11; i++) {   //0 to 11 may
+
+                var dateEl = response[i].date;
+                var confirmnedEl = response[i].total;
+                var DeathsEl = response[i].death;
+                var RecoveredEl = response[i].recovered;
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                dateArray.push(dt);
+                confirmedArray.push(confirmnedEl);
+                recoveredArray.push(RecoveredEl);
+                deathsArray.push(DeathsEl);
+            };
+
 
             chartIt();
 
         }
 
+
+
+        if (month === "Jan") {
+            //ctx.destroy();
+            console.log(dateArray.length);
+
+            dateArray.length = 0;
+            console.log(dateArray.length);
+            confirmedArray.length = 0;
+
+            recoveredArray.length = 0;
+            deathsArray.length = 0;
+
+            for (i = 102; i <= 111; i++) {
+
+                var dateEl = response[i].date;
+                var confirmnedEl = response[i].total;
+                var DeathsEl = response[i].death;
+                var RecoveredEl = response[i].recovered;
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                dateArray.push(dt);
+                confirmedArray.push(confirmnedEl);
+                recoveredArray.push(RecoveredEl);
+                deathsArray.push(DeathsEl);
+                chartIt();
+
+            }
+
+        }
+
+        if (month === "Feb") {
+            dateArray.length = 0;
+            console.log(dateArray.length);
+            confirmedArray.length = 0;
+
+            recoveredArray.length = 0;
+            deathsArray.length = 0;
+            for (i = 73; i <= 101; i++) {
+
+                var dateEl = response[i].date;
+                var confirmnedEl = response[i].total;
+                var DeathsEl = response[i].death;
+                var RecoveredEl = response[i].recovered;
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                dateArray.push(dt);
+                confirmedArray.push(confirmnedEl);
+                recoveredArray.push(RecoveredEl);
+                deathsArray.push(DeathsEl);
+                chartIt();
+            }
+
+        }
+        if (month === "March") {
+            dateArray.length = 0;
+            console.log(dateArray.length);
+            confirmedArray.length = 0;
+
+            recoveredArray.length = 0;
+            deathsArray.length = 0;
+            for (i = 42; i <= 72; i++) {
+
+                var dateEl = response[i].date;
+                var confirmnedEl = response[i].total;
+                var DeathsEl = response[i].death;
+                var RecoveredEl = response[i].recovered;
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                dateArray.push(dt);
+                confirmedArray.push(confirmnedEl);
+                recoveredArray.push(RecoveredEl);
+                deathsArray.push(DeathsEl);
+                chartIt();
+            }
+
+        }
+        if (month === "April") {
+            dateArray.length = 0;
+            console.log(dateArray.length);
+            confirmedArray.length = 0;
+
+            recoveredArray.length = 0;
+            deathsArray.length = 0;
+            for (i = 12; i <= 41; i++) {
+
+                var dateEl = response[i].date;
+                var confirmnedEl = response[i].total;
+                var DeathsEl = response[i].death;
+                var RecoveredEl = response[i].recovered;
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                dateArray.push(dt);
+                confirmedArray.push(confirmnedEl);
+                recoveredArray.push(RecoveredEl);
+                deathsArray.push(DeathsEl);
+                chartIt();
+            }
+
+        }
     });
 };
-function chartIt() {
 
-    var ctx = document.getElementById('chart').getContext('2d');
+
+
+function chartIt() {
     //clear chart
     if (window.myChart != null) {
         window.myChart.destroy();
@@ -209,11 +287,50 @@ function chartIt() {
 
     window.myChart = new Chart(ctx, {
         type: 'bar',
-        data: chartData
+        data: {
+            labels: dateArray, //dates x-axis
+            datasets: [{
+                type: 'bar', //chart type
+                label: 'Confirmed Cases',
+                data: confirmedArray,
+                backgroundColor: 'rgba(54, 162, 235)',//blue first data set
+
+                fill: false,
+                borderWidth: 2,
+            }, {
+                type: 'bar',
+                label: 'Recovered cases',
+                data: recoveredArray,
+                backgroundColor: 'rgba(0,128,0)',//green 
+                fill: false,
+                borderWidth: 2
+            }, {
+                type: 'bar',
+                label: 'Deaths',
+                data: deathsArray,
+                backgroundColor: 'rgba(255, 0, 0)',//red
+                fill: false,
+                borderWidth: 2
+            }]
+        }
+
 
     });
 
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

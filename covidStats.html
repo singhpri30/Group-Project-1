@@ -24,6 +24,10 @@
                     <div class="navbar-brand">
                         <a class="navbar-item has-text-white is-size-4" href="index.html">
                             <h1>COVID-19 SCREENING TRACKER</h1>
+                            <!--<img
+                  src="http://bulma.io/images/bulma-type-white.png"
+                  alt="Logo"
+                />-->
                         </a>
                         <span class="navbar-burger burger" data-target="navbarMenu">
                             <span></span>
@@ -42,7 +46,7 @@
                                 </a>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="sams/resources.html">
+                                <a class="button is-white is-outlined" href="resources.html">
                                     <span class="icon">
                                         <i class="fa fa-superpowers"></i>
                                     </span>
@@ -66,7 +70,7 @@
                                 </a>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="sams/login.html">
+                                <a class="button is-white is-outlined" href="login.html">
                                     <span class="icon">
                                         <i class="fa fa-key"></i>
                                     </span>
@@ -118,7 +122,6 @@
                                                 <th>Cases</th>
                                                 <th>Deaths</th>
                                             </tr>
-
                                         </thead>
                                         <tbody id="nhTable-data">
 
@@ -127,28 +130,17 @@
                                 </div>
                             </div>
 
-
-
-
-
                         </aside>
 
                         <main id="main" class="column main">
 
-                            <!-- <div class="level">
-                                <div class="level-left">
-                                    <div class="level-item">
-                                        <div class="title has-text-primary"><i class="fa fa-tachometer"></i> Covid-19
-                                            Statistics
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div> -->
+                            <div id="main-heading">
+                                <h2><i class="fa fa-tachometer"></i>Covid-19 Statistics</h2>
+                            </div>
 
                             <div id="dataSection" class="columns is-multiline">
                                 <div class="column">
-                                    <div id="global-column" class="box notification is-primary">
+                                    <div id="global-column" class="box notification is-danger">
                                         <div class="heading">Globally</div>
 
                                         <div id="images">
@@ -206,13 +198,14 @@
 
                             <div id="dataSection" class="columns is-multiline">
 
-                                <div id="search-month">
-                                    Select Month
-                                    <select>
-                                        <option value="May">May</option>
-                                        <option>April</option>
-                                        <option>March</option>
-                                        <option>Feb</option>
+                                <div id="select-month">
+                                    <p id="month-heading">Search by Month</p>
+                                    <select id="months">
+                                        <option value="Jan">Jan</option>
+                                        <option value="Feb">Feb</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option selected value="May">May</option>
                                     </select>
                                 </div>
 
