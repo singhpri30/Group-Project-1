@@ -1,4 +1,4 @@
-.card{
+/* .card{
 border-radius: 4px solid blue;
 
 };
@@ -10,4 +10,14 @@ padding: 20px
 #optionEl{
 padding-top: 10px;
 
-};
+}; */
+
+.hero.is-dark {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1557683304-673a23048d34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=486&q=80")
+        center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
