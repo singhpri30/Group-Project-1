@@ -110,54 +110,25 @@ $("#addEmployee").one("click", function () {
     $(addNameButton).hide();
   });
 });
+function errorReturnUser() {
+  $("#errorReturn").text("");
+  var testError = $("<p>").text("Please Select a Name From The Dropdown").css({
+    color: "red",
+    fontSize: "20px",
+    display: "flex",
+    margin: " 0 auto",
+  });
+  setTimeout(function () {
+    $("#errorReturn").append(testError);
+  }, 50);
+}
 
 //when start button is clicked
 $("#startBtn").click(function () {
   if ($("#adminName option:selected").val() === "Admin Name") {
-    if ($(pleaseSelect).length) {
-      pleaseSelect.remove();
-      var pleaseSelect = $("<p>")
-        .text("Please Select a Name From The Dropdown")
-        .css({
-          color: "red",
-          fontSize: "20px",
-          display: "flex",
-          margin: " 0 auto",
-        });
-      $("#questionField").append(pleaseSelect);
-    } else {
-      var pleaseSelect = $("<p>")
-        .text("Please Select a Name From The Dropdown")
-        .css({
-          color: "red",
-          fontSize: "20px",
-          display: "flex",
-          margin: " 0 auto",
-        });
-    }
-    $("#questionField").append(pleaseSelect);
+    errorReturnUser();
   } else if ($("#employeeName option:selected").val() === "Employee Name") {
-    if ($(pleaseSelect).length) {
-      pleaseSelect.remove();
-      var pleaseSelect = $("<p>")
-        .text("Please Select a Name From The Dropdown")
-        .css({
-          color: "red",
-          fontSize: "20px",
-          display: "flex",
-          margin: " 0 auto",
-        });
-      $("#questionField").append(pleaseSelect);
-    } else {
-      var pleaseSelect = $("<p>")
-        .text("Please Select a Name From The Dropdown")
-        .css({
-          color: "red",
-          fontSize: "20px",
-          display: "flex",
-          margin: " 0 auto",
-        });
-    }
+    errorReturnUser();
   } else {
     //for looping through the admins in local storage
     var adminList = $("#adminName > option");
@@ -220,7 +191,6 @@ function askQuestion() {
     .text("Next")
     .css({ display: "flex", margin: " 0 auto", marginTop: "20px" });
   //appendnig question to field
-  $("#questionField").append(question);
 
   //adding yes or no control buttons
   var radioAnswerdiv = $("<div>")
@@ -251,8 +221,10 @@ function askQuestion() {
   $(noLabel).append(inputNo);
   $(radioAnswerdiv).append(noLabel);
 
-  $("#questionField").append(radioAnswerdiv);
-  $("#questionField").append(nextBtn);
+  var returnError = $("<p>");
+
+  $("#questionField").append(question, radioAnswerdiv, nextBtn, returnError);
+
   //for taking the employee temperature
   function takeTemp() {
     $("#questionField").text("");
@@ -273,8 +245,9 @@ function askQuestion() {
       class: "button",
       id: "reviewBtn",
     });
+    var tempError = $("<p>").attr("id", "tempError");
     $(reviewBtn).text("Review");
-    $("#questionField").append(header, employeeTemp, reviewBtn);
+    $("#questionField").append(header, employeeTemp, reviewBtn, tempError);
   }
 
   //adding answers to session storage
@@ -293,7 +266,6 @@ function askQuestion() {
       [varName]: answer,
     };
     var superObject = Object.assign(lsAnswersJSON, answerToAdd);
-    console.log(superObject);
     var STRINGlsAnswersJSON = JSON.stringify(superObject);
     sessionStorage.setItem("answers", STRINGlsAnswersJSON);
   }
@@ -314,14 +286,13 @@ function askQuestion() {
       );
     }
     var superObject = Object.assign(lsAnswersJSON, answerToAdd);
-    console.log(superObject);
     var STRINGlsAnswersJSON = JSON.stringify(superObject);
     sessionStorage.setItem("answers", STRINGlsAnswersJSON);
   }
 
   function askSymptoms() {
     event.preventDefault();
-    $("#yesBtn").click(function () {
+    $("#yesBtn").one("click", function () {
       $("#nextBtn").remove();
       var testPara = $("<p>")
         .text("Please select any symptoms that apply:")
@@ -397,10 +368,8 @@ function askQuestion() {
         $("#checkbox" + i).change(function () {
           if ($(this).attr("value") === "unchecked") {
             $(this).attr("value", "checked");
-            console.log($(this).attr("title") + ": checked");
           } else if ($(this).attr("value") === "checked") {
             $(this).attr("value", "unchecked");
-            console.log($(this).attr("title") + ": unchecked");
           }
         });
       }
@@ -409,10 +378,7 @@ function askQuestion() {
         for (i = 0; i <= 4; i++) {
           if ($("#checkbox" + i).attr("value") === "checked") {
             var checkedSymptoms = $("#checkbox" + i).attr("title");
-            console.log(checkedSymptoms);
-
             symptomsToAdd.push(checkedSymptoms);
-            console.log(symptomsToAdd);
           }
         }
         var symptomsToAddJSON = JSON.stringify(symptomsToAdd);
@@ -425,13 +391,16 @@ function askQuestion() {
   $("#nextBtn").click(function () {
     if ($("#askQuestion input:checked").val() == null) {
       event.preventDefault();
-      var pleaseAnswer = $("<p>").text("Please Pick Yes or No").css({
+      $(returnError).text("");
+      var errorMessage = $("<p>").text("Please Pick Yes or No").css({
         color: "red",
         fontSize: "20px",
         display: "flex",
         margin: " 0 auto",
       });
-      $("#questionField").append(pleaseAnswer);
+      setTimeout(function () {
+        $(returnError).append(errorMessage);
+      }, 50);
     } else {
       addAnswer();
 
@@ -450,16 +419,19 @@ function askQuestion() {
         takeTemp();
         $("#reviewBtn").click(function () {
           if ($("#employeeTemp").val() == "") {
-            event.preventDefault();
-            var pleaseAnswer = $("<p>")
+            $("#tempError").text("");
+            var errorTemp = $("<p>")
               .text("Please Enter Employee Temperature")
               .css({
                 color: "red",
                 fontSize: "20px",
                 display: "flex",
                 margin: " 0 auto",
+                marginTop: "10px",
               });
-            $("#questionField").append(pleaseAnswer);
+            setTimeout(function () {
+              $("#tempError").append(errorTemp);
+            }, 50);
           } else {
             addTemp();
             $("#questionField").text("");
@@ -504,8 +476,6 @@ function askQuestion() {
               var answerToLSObj = `${value}`;
               answersToLocalStorageObject.push(answerToLSObj);
             }
-            console.log(answersToLocalStorageObject);
-
             //getting symptoms stored in session storage
             var symptomsToDisplay = sessionStorage.getItem("symptoms");
 

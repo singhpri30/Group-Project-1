@@ -1,8 +1,6 @@
 var employeeData = localStorage.getItem("answers");
 var employeeDataJSON = JSON.parse(employeeData);
 
-console.log(employeeDataJSON);
-
 var rows = 10;
 var columns = employeeDataJSON.length / 10;
 
@@ -21,5 +19,5 @@ for (x = 0; x < columns; x++) {
     $(columnDiv).append(dataEntry);
   }
   //append row
-  $("#dataGrid").append(columnDiv);
+  $("#dataGrid").prepend(columnDiv);
 }
