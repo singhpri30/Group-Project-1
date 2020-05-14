@@ -7,7 +7,7 @@ var deathsArray = [];
 var recoveredArray = [];
 
 
-// *****this code is for creating a table to populate usa state data
+// *****this code is for creating a table to populate usa states data
 $.ajax({
     url: usaStateTotal,
     method: 'GET',
@@ -52,7 +52,6 @@ $.ajax({
         }
 
         var tableRowElement = $("<tr>"); //creating a table row
-
         var tabledateEl = $("<td>"); //creating a table cell
         tabledateEl.text(countyName.toUpperCase()); // setting table cell text to county name 
 
@@ -69,7 +68,7 @@ $.ajax({
 })
 
 
-//**********this code is to display Global data */
+//**********this code is to display Global data and USA data*/
 var queryURL = "https://coronavirus-19-api.herokuapp.com/countries"; //api to fetch the data
 $.ajax({
     url: queryURL,
@@ -85,16 +84,6 @@ $.ajax({
     $("#global-stats").text(totalConfirmed);
     $("#death-stats").text(totalDeaths);
     $("#recovered-stats").text(totalRecovered);
-
-});
-
-//**********this code is to display USA data */
-var usaQueryURL = "https://coronavirus-19-api.herokuapp.com/countries"; //api to fetch the data
-$.ajax({
-    url: usaQueryURL,
-    method: 'GET',
-}).then(function (response) {
-
     //fetching the responses and storing in the variables
     var usaTotalConfirmed = response[1].cases;
 
@@ -107,9 +96,6 @@ $.ajax({
     $("#usa-recovered-stats").text(usaTotalRecovered);
 
 });
-
-
-
 
 //**********this code is to display NH data */
 var nhQueryURL = "https://covidtracking.com/api/v1/states/NH/current.json"; //api to fetch NH data
@@ -133,31 +119,22 @@ $.ajax({
 
 //**********this code is to create usa chart and display data on it */
 var usaDateWiseData = "https://covidtracking.com/api/us/daily";
-//var selectMonth = $("#search-month").val();
-//console.log(selectMonth);
 
-$("#months").on("change", function () {
-
-    console.log(this.value);
+$("#months").on("change", function () { //calling change function when the value of dropdown is changed
     $("#months").val(this.value);
     getData(this.value);
 })
 
-
 getData("May");
-function getData(month) { //getting data from third party
+function getData(month) {
     $.ajax({
         url: usaDateWiseData,
         method: 'GET',
     }).then(function (response) {
 
-        console.log(response);
-
         if (month === "May") {
-            dateArray.length = 0;
-            console.log(dateArray.length);
+            dateArray.length = 0; //emptying all the array before pushing new values
             confirmedArray.length = 0;
-
             recoveredArray.length = 0;
             deathsArray.length = 0;
             for (i = 0; i <= 11; i++) {   //0 to 11 may
@@ -166,28 +143,17 @@ function getData(month) { //getting data from third party
                 var confirmnedEl = response[i].total;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
-                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
+                var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY'); //changing the date format
                 dateArray.push(dt);
                 confirmedArray.push(confirmnedEl);
                 recoveredArray.push(RecoveredEl);
                 deathsArray.push(DeathsEl);
             };
-
-
             chartIt();
-
         }
-
-
-
         if (month === "Jan") {
-            //ctx.destroy();
-            console.log(dateArray.length);
-
-            dateArray.length = 0;
-            console.log(dateArray.length);
+            dateArray.length = 0;//emptying all the array before pushing new values
             confirmedArray.length = 0;
-
             recoveredArray.length = 0;
             deathsArray.length = 0;
 
@@ -203,16 +169,11 @@ function getData(month) { //getting data from third party
                 recoveredArray.push(RecoveredEl);
                 deathsArray.push(DeathsEl);
                 chartIt();
-
             }
-
         }
-
         if (month === "Feb") {
-            dateArray.length = 0;
-            console.log(dateArray.length);
+            dateArray.length = 0;//emptying all the array before pushing new values
             confirmedArray.length = 0;
-
             recoveredArray.length = 0;
             deathsArray.length = 0;
             for (i = 73; i <= 101; i++) {
@@ -228,13 +189,10 @@ function getData(month) { //getting data from third party
                 deathsArray.push(DeathsEl);
                 chartIt();
             }
-
         }
         if (month === "March") {
-            dateArray.length = 0;
-            console.log(dateArray.length);
+            dateArray.length = 0;//emptying all the array before pushing new values
             confirmedArray.length = 0;
-
             recoveredArray.length = 0;
             deathsArray.length = 0;
             for (i = 42; i <= 72; i++) {
@@ -250,13 +208,10 @@ function getData(month) { //getting data from third party
                 deathsArray.push(DeathsEl);
                 chartIt();
             }
-
         }
         if (month === "April") {
-            dateArray.length = 0;
-            console.log(dateArray.length);
+            dateArray.length = 0;//emptying all the array before pushing new values
             confirmedArray.length = 0;
-
             recoveredArray.length = 0;
             deathsArray.length = 0;
             for (i = 12; i <= 41; i++) {
@@ -277,11 +232,8 @@ function getData(month) { //getting data from third party
     });
 };
 
-
-
 function chartIt() {
-    //clear chart
-    if (window.myChart != null) {
+    if (window.myChart != null) {//before creating a new chart destroying any existing chart
         window.myChart.destroy();
     }
 
@@ -293,7 +245,7 @@ function chartIt() {
                 type: 'bar', //chart type
                 label: 'Confirmed Cases',
                 data: confirmedArray,
-                backgroundColor: 'rgba(54, 162, 235)',//blue first data set
+                backgroundColor: 'rgba(54, 162, 235)',//dataset one to display confirmed cases
 
                 fill: false,
                 borderWidth: 2,
@@ -301,48 +253,30 @@ function chartIt() {
                 type: 'bar',
                 label: 'Recovered cases',
                 data: recoveredArray,
-                backgroundColor: 'rgba(0,128,0)',//green 
+                backgroundColor: 'rgba(0,128,0)',//dataset two to display recovered cases
                 fill: false,
                 borderWidth: 2
             }, {
                 type: 'bar',
                 label: 'Deaths',
                 data: deathsArray,
-                backgroundColor: 'rgba(255, 0, 0)',//red
+                backgroundColor: 'rgba(255, 0, 0)',//dataset three to display deaths
                 fill: false,
                 borderWidth: 2
             }]
         }
-
-
     });
-
-
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //**********this code is to create nh chart and display data on it */
-var countyURL = "https://corona.lmao.ninja/v2/historical/usacounties/new%20hampshire?lastdays=1";
 var countyName = ["Belknap", "Carroll", "Cheshire", "Coos", "Grafton", "Hillsborough", "Merrimack", "Rockingham", "Strafford", "Sullivan"]
 var dataCountyArray = [];
 var deathDataArray = [];
 
 
 $.ajax({
-    url: countyURL,
+    url: nhCountyTotal,
     method: "GET",
 }).then(function (response) {
 
@@ -368,8 +302,8 @@ $.ajax({
 
 // this code will create nh county chart
 function nhChartIt() {
-    var nhctx = document.getElementById('nhChart').getContext('2d'); // storing canvan element in a variable
-    if (window.nhChartEl != null) {
+    var nhctx = document.getElementById('nhChart').getContext('2d'); // storing canvas element in a variable
+    if (window.nhChartEl != null) { //before creating a new chart destroying any existing chart
         window.nhChartEl.destroy();
     }
 
@@ -400,18 +334,6 @@ function nhChartIt() {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //this code to make navbar responsive
