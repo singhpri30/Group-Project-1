@@ -40,7 +40,7 @@ function getArticles(topic) {
   }
 
   //Add the category param only if it exists, otherwise nothing, makes search parameters flexible
-  var queryURL = `http://newsapi.org/v2/top-headlines?country=us${topicString}&apiKey=5c9461f2787b49e1a8dc82cb0c1ad839`;
+  var queryURL = `https://newsapi.org/v2/top-headlines?country=us${topicString}&apiKey=5c9461f2787b49e1a8dc82cb0c1ad839`;
   console.log(queryURL);
   $.ajax({
     url: queryURL,
@@ -72,7 +72,7 @@ function popArticles(articleList) {
     });
     var titleEl = $("<h3>");
     var descEl = $("<div>").attr("id", "description");
-    var articleLink = $("<a>").attr("id", "link");
+    var articleLink = $("<a>").attr({ id: "link", target: "_blank" });
     var publishedAt = $("<div>");
 
     //connect api text content to card
@@ -83,7 +83,8 @@ function popArticles(articleList) {
     $(publishedAt).text(articleList[i].publishedAt).css("margin-left", "10px");
     $(descEl).text(articleList[i].description).css("margin-left", "10px");
     $(articleLink).attr("href", articleList[i].url).css("margin-left", "10px");
-    $(articleLink).text("click to article").css("color", "darkblue");
+    $(articleLink).text("click to article")
+    .css("color", "darkblue");
 
     //appended the text elements within the div
     $(cardEl).append(contentEl, titleEl, publishedAt, descEl, articleLink);
