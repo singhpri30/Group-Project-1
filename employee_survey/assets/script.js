@@ -547,7 +547,7 @@ function askQuestion() {
                   marginTop: "40px",
                 });
               var goToEmpData = $("<a>")
-                .attr({ class: "button", href: "employeeData.html" })
+                .attr({ class: "button", href: "login.html" })
                 .text("Employee Data")
                 .css({
                   display: "flex",
