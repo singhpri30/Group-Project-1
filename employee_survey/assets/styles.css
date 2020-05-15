@@ -37,7 +37,11 @@
   background-size: 100px 100px;
   background-color: var(--stripe);
 }
-
+@media only screen and (max-width: 420px) {
+  #questionField {
+    height: 100%;
+  }
+}
 #date {
   padding-bottom: 10px;
 }

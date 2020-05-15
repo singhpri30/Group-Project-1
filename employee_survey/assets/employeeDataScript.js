@@ -10,8 +10,10 @@ for (x = 0; x < columns; x++) {
   for (y = 0; y < rows; y++) {
     //dataEntry is equal to row input
     var dataEntry = $("<td>").text(employeeDataJSON[y + x * 10]);
+    //marking out "yes" answers in red
     if (dataEntry.html() === "Yes") {
       dataEntry.css("backgroundColor", "red");
+      //marking out fevers in red
     } else if (dataEntry.html() >= 100) {
       dataEntry.css("backgroundColor", "red");
     }
