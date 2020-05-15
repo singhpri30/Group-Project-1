@@ -23,3 +23,9 @@ for (x = 0; x < columns; x++) {
   //append row
   $("#dataGrid").prepend(columnDiv);
 }
+
+$("#dataGrid").DataTable({
+  ordering: true,
+  info: true,
+  sorting: true,
+});

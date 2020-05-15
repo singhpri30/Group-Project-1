@@ -196,21 +196,23 @@ function askQuestion() {
   //adding question text
   $(question).text(surveyQuestions[questionNum]);
 
-  //creating the next qusetion button
+  //creating the next question button
   var nextBtn = $("<button>")
     .attr({ class: "button", id: "nextBtn" })
     .text("Next")
     .css({ display: "flex", margin: " 0 auto", marginTop: "20px" });
-  //appendnig question to field
 
-  //adding yes or no control buttons
+  //creating yes or no control buttons
   var radioAnswerdiv = $("<div>")
     .attr({
       class: "control",
       id: "askQuestion",
     })
     .css("paddingTop", "20px");
-  var yesLabel = $("<label>").attr("class", "radio");
+  var yesLabel = $("<label>")
+    .attr("class", "radio")
+    .text("Yes ")
+    .css("fontSize", "20px");
   var inputYes = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
@@ -218,22 +220,23 @@ function askQuestion() {
     id: "yesBtn",
   });
 
-  var noLabel = $("<label>").attr("class", "radio");
+  var noLabel = $("<label>")
+    .attr("class", "radio")
+    .text("No ")
+    .css("fontSize", "20px");
   var inputNo = $("<input>").attr({
     type: "radio",
     name: "q" + questionNum,
     value: "No",
   });
+  var returnError = $("<p>");
+
   //appending to field
-  $(yesLabel).text("Yes ").css("fontSize", "20px");
-  $(noLabel).text("No ").css("fontSize", "20px");
+
   $(yesLabel).append(inputYes);
   $(radioAnswerdiv).append(yesLabel);
   $(noLabel).append(inputNo);
   $(radioAnswerdiv).append(noLabel);
-
-  var returnError = $("<p>");
-
   $("#questionField").append(question, radioAnswerdiv, nextBtn, returnError);
 
   //for taking the employee temperature
@@ -301,8 +304,11 @@ function askQuestion() {
     sessionStorage.setItem("answers", STRINGlsAnswersJSON);
   }
 
+  //this function will be used for question 3
+  //If yes is selected, then a second question will appear
+  //asking the user to select all symptoms that apply
   function askSymptoms() {
-    event.preventDefault();
+    //dynamically creating the elements for the question
     $("#yesBtn").one("click", function () {
       $("#nextBtn").remove();
       var testPara = $("<p>")
@@ -362,12 +368,15 @@ function askQuestion() {
         value: "unchecked",
       });
 
+      //appending everything to the page
       $(labelElOne).append(inputRunnyNose);
       $(labelElTwo).append(inputSoreThoat);
       $(labelElThree).append(inputCough);
       $(labelElFour).append(inputShortnessOfBreath);
       $(symptomsDiv).append(labelElOne, labelElTwo, labelElThree, labelElFour);
       $("#questionField").append(testPara, symptomsDiv, nextBtn);
+
+      //event listener for the click
       $(nextBtn).click(function () {
         addSymptoms();
         addAnswer();
@@ -375,6 +384,9 @@ function askQuestion() {
         askQuestion();
       });
 
+      //looping through the answers and listening for a click-on or click-off
+      //when that occurs, it switches the value from checked to unchecked
+      //or unchecked to checked
       for (i = 0; i <= 4; i++) {
         $("#checkbox" + i).change(function () {
           if ($(this).attr("value") === "unchecked") {
@@ -384,6 +396,9 @@ function askQuestion() {
           }
         });
       }
+
+      //this function loops through the answers and gets the text
+      //of any answer that is "checked" and compiles it into an array
       function addSymptoms() {
         var symptomsToAdd = [];
         for (i = 0; i <= 4; i++) {
@@ -392,6 +407,7 @@ function askQuestion() {
             symptomsToAdd.push(checkedSymptoms);
           }
         }
+        //setting the array to session storage
         var symptomsToAddJSON = JSON.stringify(symptomsToAdd);
         sessionStorage.setItem("symptoms", symptomsToAddJSON);
       }
@@ -425,7 +441,7 @@ function askQuestion() {
       } else if (questionNum < surveyQuestions.length && questionNum != 2) {
         askQuestion();
 
-        //one all questions have been asked, just needs to
+        //once all questions have been asked, just needs to
       } else {
         takeTemp();
         $("#reviewBtn").click(function () {
@@ -549,7 +565,7 @@ function askQuestion() {
                   localStorage.setItem("answers", answerJSON);
                 }
               }
-
+              //after the survey is complete this message will appear
               $("#questionField").text("");
               var finalMessage = $("<p>")
                 .text("Thank You! Your Answers Have Been Submitted")
