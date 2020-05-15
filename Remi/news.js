@@ -76,13 +76,19 @@ function popArticles(articleList) {
     var publishedAt = $("<div>");
 
     //connect api text content to card
-    $(titleEl)
-      .text(articleList[i].title)
-      .css({ "font-weight": "bold", "margin-left": "10px" });
+    $(titleEl).text(articleList[i].title)
+    .css({ "font-weight": "bold", "margin-left": "10px" });
     console.log(articleList[i].title);
-    $(publishedAt).text(articleList[i].publishedAt).css("margin-left", "10px");
-    $(descEl).text(articleList[i].description).css("margin-left", "10px");
-    $(articleLink).attr("href", articleList[i].url).css("margin-left", "10px");
+    
+    $(publishedAt).text(articleList[i].publishedAt)
+    .css("margin-left", "10px");
+    
+    $(descEl).text(articleList[i].description)
+    .css("margin-left", "10px");
+    
+    $(articleLink).attr("href", articleList[i].url)
+    .css("margin-left", "10px");
+    
     $(articleLink).text("click to article")
     .css("color", "darkblue");
 
