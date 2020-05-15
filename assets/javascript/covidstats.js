@@ -131,13 +131,14 @@ function getData(month) {
         url: usaDateWiseData,
         method: 'GET',
     }).then(function (response) {
+        console.log(response);
 
         if (month === "May") {
             dateArray.length = 0; //emptying all the array before pushing new values
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 0; i <= 11; i++) {   //0 to 11 may
+            for (i = 0; i <= 14; i++) {   //0 to 11 may
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].total;
@@ -157,7 +158,7 @@ function getData(month) {
             recoveredArray.length = 0;
             deathsArray.length = 0;
 
-            for (i = 102; i <= 111; i++) {
+            for (i = 105; i <= 114; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].total;
@@ -176,7 +177,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 73; i <= 101; i++) {
+            for (i = 76; i <= 104; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].total;
@@ -195,7 +196,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 42; i <= 72; i++) {
+            for (i = 45; i <= 75; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].total;
@@ -214,7 +215,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 12; i <= 41; i++) {
+            for (i = 15; i <= 44; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].total;
