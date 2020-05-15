@@ -72,7 +72,7 @@ function popArticles(articleList) {
     });
     var titleEl = $("<h3>");
     var descEl = $("<div>").attr("id", "description");
-    var articleLink = $("<a>").attr("id", "link");
+    var articleLink = $("<a>").attr({ id: "link", target: "_blank" });
     var publishedAt = $("<div>");
 
     //connect api text content to card
@@ -83,7 +83,8 @@ function popArticles(articleList) {
     $(publishedAt).text(articleList[i].publishedAt).css("margin-left", "10px");
     $(descEl).text(articleList[i].description).css("margin-left", "10px");
     $(articleLink).attr("href", articleList[i].url).css("margin-left", "10px");
-    $(articleLink).text("click to article").css("color", "darkblue");
+    $(articleLink).text("click to article")
+    .css("color", "darkblue");
 
     //appended the text elements within the div
     $(cardEl).append(contentEl, titleEl, publishedAt, descEl, articleLink);
