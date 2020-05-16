@@ -131,7 +131,7 @@ function getData(month) {
         url: usaDateWiseData,
         method: 'GET',
     }).then(function (response) {
-        console.log(response);
+        console.log(usaDateWiseData);
 
         if (month === "May") {
             dateArray.length = 0; //emptying all the array before pushing new values
@@ -141,7 +141,7 @@ function getData(month) {
             for (i = 0; i <= 14; i++) {   //0 to 11 may
 
                 var dateEl = response[i].date;
-                var confirmnedEl = response[i].total;
+                var confirmnedEl = response[i].positive;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
                 var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY'); //changing the date format
@@ -161,7 +161,7 @@ function getData(month) {
             for (i = 105; i <= 114; i++) {
 
                 var dateEl = response[i].date;
-                var confirmnedEl = response[i].total;
+                var confirmnedEl = response[i].positive;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
                 var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
@@ -180,7 +180,7 @@ function getData(month) {
             for (i = 76; i <= 104; i++) {
 
                 var dateEl = response[i].date;
-                var confirmnedEl = response[i].total;
+                var confirmnedEl = response[i].positive;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
                 var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
@@ -199,7 +199,7 @@ function getData(month) {
             for (i = 45; i <= 75; i++) {
 
                 var dateEl = response[i].date;
-                var confirmnedEl = response[i].total;
+                var confirmnedEl = response[i].positive;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
                 var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
@@ -218,7 +218,7 @@ function getData(month) {
             for (i = 15; i <= 44; i++) {
 
                 var dateEl = response[i].date;
-                var confirmnedEl = response[i].total;
+                var confirmnedEl = response[i].positive;
                 var DeathsEl = response[i].death;
                 var RecoveredEl = response[i].recovered;
                 var dt = moment(dateEl, moment.ISO_8601).format('MM/DD/YYYY');
