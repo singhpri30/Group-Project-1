@@ -138,7 +138,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 0; i <= 14; i++) {   //0 to 11 may
+            for (i = 0; i <= 15; i++) {   //0 to 11 may
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].positive;
@@ -158,7 +158,7 @@ function getData(month) {
             recoveredArray.length = 0;
             deathsArray.length = 0;
 
-            for (i = 105; i <= 114; i++) {
+            for (i = 106; i <= 115; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].positive;
@@ -177,7 +177,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 76; i <= 104; i++) {
+            for (i = 77; i <= 105; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].positive;
@@ -196,7 +196,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 45; i <= 75; i++) {
+            for (i = 46; i <= 76; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].positive;
@@ -215,7 +215,7 @@ function getData(month) {
             confirmedArray.length = 0;
             recoveredArray.length = 0;
             deathsArray.length = 0;
-            for (i = 15; i <= 44; i++) {
+            for (i = 16; i <= 45; i++) {
 
                 var dateEl = response[i].date;
                 var confirmnedEl = response[i].positive;
